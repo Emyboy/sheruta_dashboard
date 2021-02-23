@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Signup() {
     useEffect(() => {
@@ -64,8 +65,8 @@ export default function Signup() {
 
                             <div className="form-group">
                                 <div className="flexbox align-items-center">
-                                    <button type="submit" className="btn theme-bg">log in</button>
-                                    <p>Already Have An Account <a href="login.html" data-toggle="tooltip" className="theme-cl" data-original-title="Login">Log In Here.</a></p>
+                                    <button type="submit" className="btn theme-bg">Signup</button>
+                                    <p>Already Have An Account <Link to="/login" data-toggle="tooltip" className="theme-cl" data-original-title="Login">Log In Here.</Link></p>
                                 </div>
                             </div>
 

@@ -1,70 +1,95 @@
 import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import store from '../redux/store'
 
 const EachNav = ({
     name,
     to,
     badge,
     active,
-    icon
+    icon,
+    onClick
 }) => {
-    return <li className={`nav-item ${active ? 'active' : null}`} data-toggle="tooltip" data-placement="right" title={name} data-original-title={name}>
+    return <li onClick={onClick} className={`nav-item ${active ? 'active' : null}`} data-toggle="tooltip" data-placement="right" title="" data-original-title="Chatting">
         <Link className="nav-link" to={to}>
             <i className={icon}></i>
             <span className="nav-link-text">{name}</span>
             <span className="pull-right-container">
-                {badge ? <small className="label pull-right bg-green">new</small> : null}
+                {badge ? <small className="label pull-right bg-red">{badge}</small> : null}
             </span>
         </Link>
     </li>
 }
 
-export default function Layout(props) {
+const mapStateToProps = state => ({
+    view: state.view
+})
+
+export default connect(
+    mapStateToProps
+)(props => {
     const {
         currentPage
     } = props;
 
+    const { view } = props;
     useEffect(() => {
         document.querySelector('body').classList.add('fixed-nav')
         document.querySelector('body').classList.add('sticky-footer')
-    },[])
+        console.log('PROPS ---', props)
+
+    }, []);
+
+    const toggleSideNav = () => {
+        console.log('...')
+        store.dispatch({
+            type: 'SET_VIEW_STATE',
+            payload: {
+                sideNav: !view.sideNav
+            }
+        })
+    }
+
 
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
 
-                <header className="header-logo">
+                <header onClick={toggleSideNav} className="header-logo">
                     <a className="nav-link text-center mr-lg-3 hidden-xs" id="sidenavToggler"><i className="ti-align-left"></i></a>
                     <a className="navbar-brand" href="index.html">Sheruta NG</a>
                 </header>
 
-                <button className="mb-3 navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="fa fa-bars ti-align-left"></span>
+                <button onClick={toggleSideNav} className="mb-3 navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="ti-align-left"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarResponsive">
+                <div className={`collapse navbar-collapse ${view.sideNav ? 'show' : null}`} id="navbarResponsive">
 
                     <div className="navbar-side">
                         <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
-                            <EachNav icon='ti ti-home' name='Home' to='/' active={currentPage === 'home'} />
-                            <EachNav icon='ti ti-user' name='Profile' to='/profile' active={currentPage === 'profile'} />
-                            <EachNav icon='ti ti-list' name='Properties' to='/properties' active={currentPage === 'properties'} />
-                            <EachNav icon='ti ti-pencil' name='Blog' to='/blog' active={currentPage === 'blog'} />
-                            <EachNav icon='ti ti-power-off' name='Logout' to='/login' active={currentPage === null} />
+                            <EachNav onClick={toggleSideNav} icon='ti ti-home' name='Home' to='/' active={currentPage === 'home'} />
+                            <EachNav onClick={toggleSideNav} icon='ti ti-user' name='Profile' to='/profile' active={currentPage === 'profile'} />
+                            <EachNav onClick={toggleSideNav} icon='ti-email' name='Messages' to='/messages' active={currentPage === 'messages'} badge={2} />
+                            <EachNav onClick={toggleSideNav} icon='ti ti-list' name='Properties' to='/properties' active={currentPage === 'properties'} />
+                            <EachNav onClick={toggleSideNav} icon='ti ti-bell' name='Notifications' to='/notifications' active={currentPage === 'notification'} badge={22} />
+                            <EachNav onClick={toggleSideNav} icon='ti ti-pencil' name='Blog' to='/blog' active={currentPage === 'blog'} />
+                            <EachNav onClick={toggleSideNav} icon='ti ti-power-off' name='Logout' to='/login' active={currentPage === null} />
                         </ul>
                     </div>
 
                     <ul className="navbar-nav ml-left">
                         <li className="nav-item">
                             <form className="form-inline my-2 my-lg-0 mr-lg-2">
-                                <div className="input-group">
+                                {/* <div className="input-group">
                                     <span className="input-group-btn">
                                         <button className="btn btn-primary" type="button">
                                             <i className="ti-search"></i>
                                         </button>
                                     </span>
                                     <input className="form-control" type="text" placeholder="Type In TO Search" />
-                                </div>
+                                </div> */}
                             </form>
                         </li>
                     </ul>
@@ -171,7 +196,7 @@ export default function Layout(props) {
 
                             <a className="nav-link dropdown-toggle mr-lg-3 a-topbar__nav a-nav" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i className="fa fa-bell ti-bell"></i>
-                                <span className="a-nav__link-badge a-badge a-badge--accent a-animate-blink">6</span>
+                                <span className="a-nav__link-badge a-badge  bg-danger a-animate-blink">6</span>
                                 <span className="hidden-lg hidden-md mrg-l-10">New Notification</span>
                             </a>
 
@@ -277,13 +302,13 @@ export default function Layout(props) {
                 {props.children}
             </div>
 
-            <footer class="sticky-footer">
-                <div class="container">
-                    <div class="text-center">
-                        <small class="font-15">Copyright © Sheruta NG</small>
+            <footer className="sticky-footer">
+                <div className="container">
+                    <div className="text-center">
+                        <small className="font-15">Copyright © Sheruta NG</small>
                     </div>
                 </div>
             </footer>
         </>
     )
-}
+})

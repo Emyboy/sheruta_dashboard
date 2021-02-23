@@ -19,19 +19,25 @@ import Home from './pages/Home/Home'
 import Profile from './pages/Profile/Profile';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import Messages from './pages/Messages/Messages';
 
 function App() {
   return (
+      <Provider store={store}>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/properties" component={Properties} />
+          <Route exact path="/messages" component={Messages} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/profile" component={Profile} />
           <Route component={PageNotFound} />
         </Switch>
       </BrowserRouter>
+      </Provider>
   );
 }
 
