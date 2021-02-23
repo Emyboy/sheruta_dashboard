@@ -7,11 +7,11 @@ export default function Messages() {
         <Layout
             currentPage='messages'
         >
-            <div className='container-fluid'>
-            <Title title='Messages' />
+            <div className='m-1'>
+            {/* <Title title='Messages' /> */}
 
                 <div className="chat-wappers">
-                    <div className="app" style={{ height: '65vh' }}>
+                    <div className="app" style={{ height: '76vh' }}>
                         <div className="row app-one">
                             <div className="col-md-4 side">
 
