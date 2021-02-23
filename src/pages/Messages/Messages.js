@@ -395,7 +395,7 @@ export default function Messages() {
                                             <div className="chat-time">10:57 am</div>
                                             <div className="chat-content">
                                                 <h5 className="mrg-bot-5">Steave Doe</h5>
-                                                <div className="chating-box cl-white bg-primary">It’s Great opportunity to work.</div>
+                                                <div className="chating-box cl-white bg-success">It’s Great opportunity to work.</div>
                                             </div>
                                             <div className="chat-img"><img src="assets/dist/img/user-7.jpg" alt="user" /></div>
                                         </li>
@@ -404,7 +404,7 @@ export default function Messages() {
                                             <div className="time-meta">10:57 am</div>
                                             <div className="chat-content">
                                                 <h5 className="mrg-bot-5">Steave Doe</h5>
-                                                <div className="chating-box cl-white bg-primary">It’s Great opportunity to work.</div>
+                                                <div className="chating-box cl-white bg-success">It’s Great opportunity to work.</div>
                                             </div>
                                             <div className="chat-img"><img src="assets/dist/img/user-7.jpg" alt="user" /></div>
                                         </li>
@@ -413,7 +413,7 @@ export default function Messages() {
                                             <div className="chat-img"><img src="assets/dist/img/user-6.jpg" alt="user" /></div>
                                             <div className="chat-content">
                                                 <h5 className="mrg-bot-5">Angelina Rhodes</h5>
-                                                <div className="chating-box bg-light bg-primary">Well we have good budget for the project</div>
+                                                <div className="chating-box bg-light bg-success">Well we have good budget for the project</div>
                                             </div>
                                             <div className="time-meta">11:00 am</div>
                                         </li>
