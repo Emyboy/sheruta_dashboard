@@ -4,7 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-
+// import store from './redux/store';
+// if (localStorage.getItem('auth')) {
+//   store.dispatch({
+//     type: 'SET_AUTH_STATE',
+//     payload: JSON.parse(localStorage.getItem('auth'))
+//   })
+// }
 window.themeColor = '#00ba74';
 
 ReactDOM.render(

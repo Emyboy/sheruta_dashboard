@@ -24,6 +24,13 @@ import store from './redux/store';
 import Messages from './pages/Messages/Messages';
 import 'react-activity/dist/react-activity.css';
 
+if (localStorage.getItem('auth')) {
+  store.dispatch({
+    type: 'SET_AUTH_STATE',
+    payload: JSON.parse(localStorage.getItem('auth'))
+  })
+}
+
 function App() {
   return (
       <Provider store={store}>

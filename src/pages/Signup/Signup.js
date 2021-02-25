@@ -15,7 +15,7 @@ const Loading = () => {
 const Error = ({ message }) => {
     return <div className='text-center col-12 col-sm-12 col-md-6 col-lg-6' style={{ paddingTop: '40vh' }}>
         <div className="alert alert-danger">
-            {message}
+            {message} or {' '}
             <a href="https://sheruta.ng/signup" className="alert-link">Signup</a>.
 								</div>
     </div>

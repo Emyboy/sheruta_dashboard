@@ -1,8 +1,16 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import Layout from '../../components/Layout'
 import Title from '../../components/Title/Title'
 
-export default function Profile() {
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(
+    mapStateToProps
+)(props => {
+    const { agent, user } = props.auth;
     return (
         <Layout
             currentPage='profile'
@@ -19,10 +27,10 @@ export default function Profile() {
                             </div>
                             <div class="card-block padd-0 translateY-50 text-center">
                                 <div class="card-avatar style-2">
-                                    <img style={{ height: 'inherit' }} src="https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/266/266749/aging-man.jpg?w=1155&h=1537" class="img-circle img-responsive" alt="" />
+                                    <img style={{ height: 'inherit' }} src={agent.logo_url} class="img-circle img-responsive" alt="" />
                                 </div>
-                                <h5 class="font-normal mrg-bot-0 font-18 card-title">Daniel Lieser</h5>
-                                <p class="card-small-text">daniel@expertdesigner.com</p>
+                                <h5 class="font-normal mrg-bot-0 font-18 card-title">{agent.name}</h5>
+                                <p class="card-small-text">{user.email}</p>
                             </div>
                             <div class="bottom">
                                 <ul class="social-detail">
@@ -74,5 +82,5 @@ export default function Profile() {
                 </div>
 
             </div>
-        </Layout>  )
-}
+        </Layout>)
+});
