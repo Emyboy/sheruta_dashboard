@@ -22,6 +22,7 @@ import Signup from './pages/Signup/Signup';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import Messages from './pages/Messages/Messages';
+import 'react-activity/dist/react-activity.css';
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
           <Route exact path="/properties" component={Properties} />
           <Route exact path="/messages" component={Messages} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/signup/:token" component={Signup} />
           <Route exact path="/profile" component={Profile} />
           <Route component={PageNotFound} />
         </Switch>

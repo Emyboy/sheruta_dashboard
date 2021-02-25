@@ -11,7 +11,7 @@ export default function Login() {
             <div className="row">
 
 
-                <div className="hidden-xs hidden-sm col-lg-6 col-md-6 theme-bg animated fadeInLeftBig" style={{ height: '100vh' }}>
+                <div className="hidden-xs hidden-sm col-lg-6 col-md-6 theme-bg animated" style={{ height: '100vh' }}>
                     <div className="clearfix">
                         <div className="logo-title-container text-center">
                             <h5 className="cl-white text-upper">Welcome To</h5>
