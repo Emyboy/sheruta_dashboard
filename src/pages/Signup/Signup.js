@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
-import { Spinner } from 'react-activity'
+import { Spinner } from 'react-activity';
+import store from '../../redux/store';
 
 const Loading = () => {
     return <div className='text-center col-12 col-sm-12 col-md-6 col-lg-6' style={{ paddingTop: '40vh' }}>
@@ -15,88 +16,64 @@ const Error = ({ message }) => {
     return <div className='text-center col-12 col-sm-12 col-md-6 col-lg-6' style={{ paddingTop: '40vh' }}>
         <div className="alert alert-danger">
             {message}
-            <a href="https://sheruta.ng/signup" class="alert-link">Signup</a>.
+            <a href="https://sheruta.ng/signup" className="alert-link">Signup</a>.
 								</div>
     </div>
 }
 
-const SignupForm = (status) => {
-    useEffect(() => {
-        console.log('STATUS ---', status);
-    }, [status])
-    switch (status) {
-        case 'loading':
-            return <Loading />
-        case 'login':
-            return <Redirect to='/login' />
-        // case 'signup':
-        //     return 
-        default:
-            return <div className="col-12 col-sm-12 col-md-6 col-lg-6 login-sidebar animated fadeInRightBig">
-
-                <div className="login-container animated fadeInRightBig">
-
-                    <h2 className="text-center text-upper">Signup</h2>
-                    <form className="form-horizontal">
-
-                        <div className="form-group">
-                            <input type="email" className="form-control" id="inputEmail3" placeholder="Full Name" />
-                            <i className="fa fa-user"></i>
-                        </div>
-
-                        <div className="form-group">
-                            <input type="email" className="form-control" placeholder="Email or Username" />
-                            <i className="fa fa-user"></i>
-                        </div>
-
-                        <div className="form-group help">
-                            <input type="password" className="form-control" placeholder="Password" />
-                            <i className="fa fa-lock"></i>
-                            <a href="#" className="pass-view fa fa-eye"></a>
-                        </div>
-
-                        <div className="form-group help">
-                            <input type="password" className="form-control" placeholder="Confirm Password" />
-                            <i className="fa fa-lock"></i>
-                        </div>
-
-                        <div className="form-group">
-                            <div className="flexbox align-items-center">
-                                <span className="custom-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="options[]" value="1" />
-                                    <label for="checkbox1">Remember me</label>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <div className="flexbox align-items-center">
-                                <button type="submit" className="btn theme-bg">Signup</button>
-                                <p>Already Have An Account <Link to="/login" data-toggle="tooltip" className="theme-cl" data-original-title="Login">Log In Here.</Link></p>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-
-            </div>
-    }
-}
-
 export default function Signup(props) {
-
+    const JWT = jwt.decode(props.match.params.token)
     const [state, setState] = useState({
         status: 'loading',
-        message: null
+        message: null,
+        userData: null,
+        loading: false
     });
+
+    const [data, setData] = useState({
+        name: null,
+        location: null,
+        phone_number: state.userData ? state.userData.phone_number : null,
+        users_permissions_user: state.userData ? state.userData.id : null
+    })
+
+    const createAgentAccount = () => {
+        setState({ ...state, loading: true })
+        console.log('sending --', data)
+        axios(process.env.REACT_APP_API_URL + '/agents', {
+            method: 'POST',
+            headers: {
+                Authorization:
+                    `Bearer ${props.match.params.token}`,
+            },
+            data: {
+                ...data,
+                phone_number: state.userData.phone_number || null,
+                users_permissions_user: state.userData.id || null
+            }
+        })
+            .then(res => {
+                store.dispatch({
+                    type: 'SET_AUTH_STATE',
+                    payload: {
+                        jwt: props.match.params.token
+                    }
+                })
+                setState({ ...state, loading: false, status: 'login', userData: res.data })
+                // console.log(res)
+            })
+            .catch(err => {
+                setState({ ...state, loading: false })
+                // console.log(err)
+            })
+    }
 
 
     useEffect(() => {
         document.querySelector('body').classList.remove('fixed-nav')
         document.querySelector('body').classList.remove('sticky-footer');
-        const data = jwt.decode(props.match.params.token)
 
-        axios(process.env.REACT_APP_API_URL + '/users/' + data.id, {
+        axios(process.env.REACT_APP_API_URL + '/users/' + JWT.id, {
             method: 'GET',
             headers: {
                 Authorization:
@@ -104,12 +81,12 @@ export default function Signup(props) {
             },
         })
             .then(res => {
-                console.log(res)
+                // console.log(res)
                 if (res.status === 200) {
                     if (res.data.agent) {
                         setState({ status: 'login' })
                     } else {
-                        setState({ status: 'signup' })
+                        setState({ status: 'signup', userData: res.data })
                     }
                 }
             })
@@ -122,7 +99,7 @@ export default function Signup(props) {
             })
     }, [])
 
-    const Page = () => {
+    if (state.status !== 'login') {
         return <div className="container-fluid">
             <div className="row">
                 <div className="hidden-xs hidden-sm col-lg-6 col-md-6 theme-bg" style={{ height: '100vh' }}>
@@ -137,19 +114,75 @@ export default function Signup(props) {
                         </div>
                     </div>
                 </div>
-                <SignupForm status={state.status} />
+
+                {state.status === 'loading' ? <Loading /> : null}
+                {state.status === 'error' ? <Error message={state.message} /> : null}
+
+                {
+                    state.status === 'signup' ? <div className="col-12 col-sm-12 col-md-6 col-lg-6 login-sidebar animated fadeInRightBig">
+
+                        <div className="login-container animated fadeInRightBig">
+
+                            <h2 className="text-center text-upper">Signup</h2>
+                            <form className="form-horizontal">
+
+                                <div className="form-group">
+                                    <input disabled defaultValue={state.userData.email} name='name' type="email" className="form-control" id="inputEmail3" placeholder="Company Name" />
+                                    <i className="fa fa-user"></i>
+                                </div>
+                                <div className="form-group">
+                                    <input disabled={state.loading} onChange={e => setData({ ...data, name: e.target.value })} name='name' type="text" className="form-control" id="inputEmail3" placeholder="Company Name" />
+                                    <i className="fa fa-user"></i>
+                                </div>
+
+                                <div className="form-group">
+                                    <input disabled={state.loading} onChange={e => setData({ ...data, location: e.target.value })} name='location' type="text" className="form-control" placeholder="Location" />
+                                    <i className="fa fa-map"></i>
+                                </div>
+
+                                <div className="form-group help">
+                                    <input disabled={state.loading} onChange={e => setData({ ...data, phone_number: e.target.value })} name='phone_number' defaultValue={state.userData.phone_number} type="text" className="form-control" placeholder="Phone Number" />
+                                    <i className="fa fa-phone"></i>
+                                    {/* <a href="#" className="pass-view fa fa-eye"></a> */}
+                                </div>
+
+                                {/* <div className="form-group">
+                                <div className="flexbox align-items-center">
+                                    <span className="custom-checkbox">
+                                        <input disabled={state.loading} onChange={e => setData({...data, })} type="checkbox" id="checkbox1" name="options[]" value="1" />
+                                        <label for="checkbox1">Remember me</label>
+                                    </span>
+                                </div>
+                            </div> */}
+
+                                <div className="form-group">
+                                    <div className="flexbox align-items-center">
+                                        <button onClick={createAgentAccount} disabled={state.loading} type="submit" className="btn theme-bg">{state.loading ? <Spinner color='white' /> : 'Create Account'}</button>
+                                        <p>Already Have An Account <Link to="/login" data-toggle="tooltip" className="theme-cl" data-original-title="Login">Log In Here.</Link></p>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div> : null
+                }
+
+
             </div>
         </div>
-    }
-
-    switch (state.status) {
-        case 'login':
-            return <Redirect to='/login' />
-        case 'error':
-            return <Error message={state.message} />
-        case 'loading':
-            return <Page />
-        default:
-            return <Page />
+    } else {
+        if(store.getState().auth.jwt){
+            store.dispatch({
+                type: 'SET_AUTH_STATE',
+                payload: {
+                    user: state.userData.users_permissions_user,
+                    agent: state.userData
+                }
+            })
+            localStorage.setItem('auth', JSON.stringify(store.getState().auth))
+            return <Redirect to='/' />
+        }
+        return <Redirect to='/login' />
     }
 }
