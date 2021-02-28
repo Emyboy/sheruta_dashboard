@@ -20,7 +20,7 @@ import Profile from './pages/Profile/Profile';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import store from './redux/store/store';
 import Messages from './pages/Messages/Messages';
 import 'react-activity/dist/react-activity.css';
 

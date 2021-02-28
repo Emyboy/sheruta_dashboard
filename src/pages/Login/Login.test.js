@@ -7,6 +7,6 @@ test('should render 2 Login Text', () => {
     const { debug, getAllByText } = render(<Router>
         <Login />
     </Router>);
-    expect(getAllByText('Login')).toHaveLength = 4
+    expect(getAllByText('Login')).toHaveLength = 1
     debug()
 });

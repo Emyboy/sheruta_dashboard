@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { Spinner } from 'react-activity';
 import { connect } from 'react-redux';
-import store from '../../redux/store';
+import store from '../../redux/store/store';
 import { loginAgent } from '../../redux/actions/auth.action';
 
 const mapStateToProps = state =>({

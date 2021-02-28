@@ -26,7 +26,7 @@ export default connect(
                                 <img class="card-img-top" height='150' src="https://img.freepik.com/free-vector/green-background-with-halftone-effect-squares_23-2148661430.jpg?size=626&ext=jpg" alt="Card image cap" />
                             </div>
                             <div class="card-block padd-0 translateY-50 text-center">
-                                <div class="card-avatar style-2">
+                                <div class="card-avatar style-2" style={{ width: '100px' }}>
                                     <img style={{ height: 'inherit' }} src={agent.logo_url} class="img-circle img-responsive" alt="" />
                                 </div>
                                 <h5 class="font-normal mrg-bot-0 font-18 card-title">{agent.name}</h5>

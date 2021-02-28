@@ -3,7 +3,8 @@ import { Link, Redirect } from 'react-router-dom'
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { Spinner } from 'react-activity';
-import store from '../../redux/store';
+import store from '../../redux/store/store';
+import { connect } from 'react-redux';
 
 const Loading = () => {
     return <div className='text-center col-12 col-sm-12 col-md-6 col-lg-6' style={{ paddingTop: '40vh' }}>
@@ -21,7 +22,13 @@ const Error = ({ message }) => {
     </div>
 }
 
-export default function Signup(props) {
+const mapStateToPrpos = state => ({
+    auth: state.auth
+})
+
+export default connect(
+    mapStateToPrpos
+)(props => {
     const JWT = jwt.decode(props.match.params.token)
     const [state, setState] = useState({
         status: 'loading',
@@ -172,17 +179,9 @@ export default function Signup(props) {
             </div>
         </div>
     } else {
-        if(store.getState().auth.jwt){
-            store.dispatch({
-                type: 'SET_AUTH_STATE',
-                payload: {
-                    user: state.userData.users_permissions_user,
-                    agent: state.userData
-                }
-            })
-            localStorage.setItem('auth', JSON.stringify(store.getState().auth))
+        if (props.auth) {
             return <Redirect to='/' />
-        }
-        return <Redirect to='/login' />
+        } else
+            return <Redirect to='/login' />
     }
-}
+});

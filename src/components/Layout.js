@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
-import store from '../redux/store'
+import store from '../redux/store/store'
 import { logoutAgent } from '../redux/actions/auth.action';
 
 const EachNav = ({

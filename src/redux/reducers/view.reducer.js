@@ -3,7 +3,8 @@
 const initialState = {
     sideNav: false, 
     notification: false,
-    message: false
+    message: false,
+    categories: []
 }
 
 export default (state = initialState, { type, payload }) => {

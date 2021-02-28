@@ -1,5 +1,5 @@
 import axios from "axios"
-import store from "../store"
+import store from "../store/store"
 
 
 
@@ -22,8 +22,7 @@ export const loginAgent = data => dispatch => {
                     loading: false
                 }
             })
-            localStorage.setItem('auth', JSON.stringify(store.getState().auth))
-            // console.log(res)
+            // localStorage.setItem('auth', JSON.stringify(store.getState().auth))
         })
         .catch(err => {
             dispatch({
