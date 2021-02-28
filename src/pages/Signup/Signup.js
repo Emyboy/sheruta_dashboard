@@ -82,10 +82,10 @@ export default connect(
 
         axios(process.env.REACT_APP_API_URL + '/users/' + JWT.id, {
             method: 'GET',
-            headers: {
-                Authorization:
-                    `Bearer ${props.match.params.token}`,
-            },
+            // headers: {
+            //     Authorization:
+            //         `Bearer ${props.match.params.token}`,
+            // },
         })
             .then(res => {
                 console.log(res)
