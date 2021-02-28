@@ -88,7 +88,7 @@ export default connect(
             },
         })
             .then(res => {
-                // console.log(res)
+                console.log(res)
                 if (res.status === 200) {
                     if (res.data.agent) {
                         setState({ status: 'login' })
@@ -102,7 +102,7 @@ export default connect(
                     status: 'error',
                     message: 'Something went wrong please try again'
                 })
-                // console.log(err)
+                console.log(err)
             })
     }, [])
 
