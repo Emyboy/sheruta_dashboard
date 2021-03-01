@@ -22,7 +22,13 @@
   background: var(--primary-color-hover)
 }
 
-
+body, html {
+  background-color: rgb(242, 247, 251) !important;
+}
 input .form-control{
     border-color: var(--primary-color) !important;
+}
+
+.link {
+  cursor: pointer !important;
 }

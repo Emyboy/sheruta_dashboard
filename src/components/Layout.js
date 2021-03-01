@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom'
 import store from '../redux/store/store'
 import { logoutAgent } from '../redux/actions/auth.action';
 
+
 const EachNav = ({
     name,
     to,
@@ -30,6 +31,23 @@ const mapStateToProps = state => ({
 
 const mapDispatch = {
     logoutAgent
+}
+
+export const HeaderNav = ({
+    title,
+    subTitle
+}) => {
+    return <div style={{ zIndex: 100 }} className='pl-2 nav card shadow fixed-top animated fadeInDown'>
+        <div className='row'>
+            <div className='p-2 pr-3'>
+                <i className='ti-angle-left' style={{ fontSize: '26px' }}></i>
+            </div>
+            <div>
+                <h5 className='m-0'>{title}</h5>
+                <small style={{ color: 'rgb(174 181 195)' }}>{subTitle}</small>
+            </div>
+        </div>
+    </div>
 }
 
 export default connect(
@@ -69,7 +87,6 @@ export default connect(
         return (
             <>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-
                     <header onClick={toggleSideNav} className="header-logo">
                         <a className="nav-link text-center mr-lg-3 hidden-xs" id="sidenavToggler"><i className="ti-align-left"></i></a>
                         <a className="navbar-brand" href="index.html">Sheruta NG</a>
@@ -316,13 +333,13 @@ export default connect(
                     {props.children}
                 </div>
 
-                <footer className="sticky-footer">
+                {/* <footer className="sticky-footer">
                     <div className="container">
                         <div className="text-center">
                             <small className="font-15">Copyright © Sheruta NG</small>
                         </div>
                     </div>
-                </footer>
+                </footer> */}
             </>
         )
     }else {

@@ -1,12 +1,14 @@
 import React from 'react'
 
-export default function EachProperty() {
+export default function EachProperty({
+    data
+}) {
     return (
         <div className="col-md-4 col-sm-6">
             <div className="card">
                 <img className="card-img-top" src="https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/266/266749/aging-man.jpg?w=1155&h=1537" alt="Card image cap" />
                 <div className="card-block">
-                    <h5 className="font-normal mrg-bot-0 font-18 card-title">Daniel Lieser</h5>
+                    <h5 className="font-normal mrg-bot-0 font-18 card-title">{data.name}</h5>
                     <p className="card-small-text">Web Designer</p>
                     <ul className="card-list">
                         <li><i className="ti-location-pin"></i> 85 QCH23, London</li>

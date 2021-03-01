@@ -13,15 +13,17 @@ export const loginAgent = data => dispatch => {
         method: 'POST'
     })
         .then(res => {
-            dispatch({
-                type: 'SET_AUTH_STATE',
-                payload: {
-                    user: res.data.user,
-                    agent: res.data.user.agent,
-                    jwt: res.data.jwt,
-                    loading: false
-                }
-            })
+            if(res.data.user.agent){
+                dispatch({
+                    type: 'SET_AUTH_STATE',
+                    payload: {
+                        user: res.data.user,
+                        agent: res.data.user.agent,
+                        jwt: res.data.jwt,
+                        loading: false
+                    }
+                })
+            }
             // localStorage.setItem('auth', JSON.stringify(store.getState().auth))
         })
         .catch(err => {
@@ -29,7 +31,7 @@ export const loginAgent = data => dispatch => {
                 type: 'SET_AUTH_STATE',
                 payload: { loading: false }
             })
-            // console.log(err)
+            console.log(err)
         })
 }
 

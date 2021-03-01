@@ -23,6 +23,12 @@ import { Provider } from 'react-redux';
 import store from './redux/store/store';
 import Messages from './pages/Messages/Messages';
 import 'react-activity/dist/react-activity.css';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+// import 'primereact/resources/themes/arya-green/theme.css'
+import 'primereact/resources/themes/saga-green/theme.css'
+import { SubmitProperty } from './pages/SubmitProperty/SubmitProperty';
 
 if (localStorage.getItem('auth')) {
   store.dispatch({
@@ -33,19 +39,20 @@ if (localStorage.getItem('auth')) {
 
 function App() {
   return (
-      <Provider store={store}>
+    <Provider store={store}>
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/properties" component={Properties} />
           <Route exact path="/messages" component={Messages} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/signup/:token" component={Signup} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="/submit/property" component={SubmitProperty} />
+          <Route exact path="/signup/:token" component={Signup} />
           <Route component={PageNotFound} />
         </Switch>
       </BrowserRouter>
-      </Provider>
+    </Provider>
   );
 }
 

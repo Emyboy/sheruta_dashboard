@@ -40,8 +40,8 @@ export default connect(
     const [data, setData] = useState({
         name: null,
         location: null,
-        phone_number: state.userData ? state.userData.phone_number : null,
-        users_permissions_user: state.userData ? state.userData.id : null
+        phone_number: null,
+        users_permissions_user: null
     })
 
     const createAgentAccount = () => {
@@ -55,8 +55,8 @@ export default connect(
             },
             data: {
                 ...data,
-                phone_number: state.userData.phone_number || null,
-                users_permissions_user: state.userData.id || null
+                // phone_number: state.userData.phone_number,
+                // users_permissions_user: state.userData.id
             }
         })
             .then(res => {
@@ -67,11 +67,11 @@ export default connect(
                     }
                 })
                 setState({ ...state, loading: false, status: 'login', userData: res.data })
-                // console.log(res)
+                console.log(res)
             })
             .catch(err => {
                 setState({ ...state, loading: false })
-                // console.log(err)
+                console.log(err)
             })
     }
 
@@ -93,7 +93,12 @@ export default connect(
                     if (res.data.agent) {
                         setState({ status: 'login' })
                     } else {
-                        setState({ status: 'signup', userData: res.data })
+                        setState({ status: 'signup', userData: res.data });
+                        setData({
+                            ...data,
+                            phone_number: res.data.phone_number,
+                            users_permissions_user: res.data.id
+                        })
                     }
                 }
             })
@@ -102,7 +107,7 @@ export default connect(
                     status: 'error',
                     message: 'Something went wrong please try again'
                 })
-                console.log(err)
+                // console.log(err)
             })
     }, [])
 

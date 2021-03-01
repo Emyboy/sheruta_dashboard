@@ -1,14 +1,22 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import Layout from '../../components/Layout'
 import Title from '../../components/Title/Title'
+import EachConversation from './EachConversation';
 
-export default function Messages() {
+const mapState = state => ({
+    auth: state.auth
+})
+
+export default connect(
+    mapState
+)(props => {
     return (
         <Layout
             currentPage='messages'
         >
             <div className='m-1'>
-            {/* <Title title='Messages' /> */}
+                {/* <Title title='Messages' /> */}
 
                 <div className="chat-wappers">
                     <div className="app" style={{ height: '76vh' }}>
@@ -37,142 +45,14 @@ export default function Messages() {
                                         </div>
                                     </div>
 
-                                    <div className="row sideBar">
+                                    <div className="sideBar">
 
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-1.jpg" alt="..." />
-                                                    </a>
+                                        {
+                                            props.auth.user.conversations.map((val,i) => {
+                                                return <EachConversation key={i} data={val} />
+                                            })
+                                        }
 
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Hossein Shams</a> <span className="time-meta pull-right">18:18</span></h6>
-                                                        <small className="cl-success">Online</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-2.jpg" alt="..." />
-                                                    </a>
-
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Alisha L. Burchell</a> <span className="time-meta pull-right">10:18</span></h6>
-                                                        <small className="cl-success">Online</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-3.jpg" alt="..." />
-                                                    </a>
-
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Daniel N. Anderson</a> <span className="time-meta pull-right">20:18</span></h6>
-                                                        <small className="cl-warning">Busy</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-4.jpg" alt="..." />
-                                                    </a>
-
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Kristina R. Noto</a> <span className="time-meta pull-right">18:18</span></h6>
-                                                        <small className="cl-success">Online</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-5.jpg" alt="..." />
-                                                    </a>
-
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Larry C. Cramer</a> <span className="time-meta pull-right">18:18</span></h6>
-                                                        <small className="cl-primary">Away</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-6.jpg" alt="..." />
-                                                    </a>
-
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Sharon C. Mason</a> <span className="time-meta pull-right">20:20</span></h6>
-                                                        <small className="cl-warning">Busy</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-7.jpg" alt="..." />
-                                                    </a>
-
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Michael P. Fowler</a> <span className="time-meta pull-right">07:10</span></h6>
-                                                        <small className="cl-danger">Offline</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-8.jpg" alt="..." />
-                                                    </a>
-
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Nancy T. Clayton</a> <span className="time-meta pull-right">17:12</span></h6>
-                                                        <small className="cl-success">Online</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="box sideBar-body">
-                                            <div className="ground-list ground-list-hove bb-1">
-                                                <div className="media media-single">
-                                                    <a href="#">
-                                                        <img className="avatar avatar-lg" src="assets/dist/img/user-1.jpg" alt="..." />
-                                                    </a>
-
-                                                    <div className="media-body">
-                                                        <h6><a href="#">Hossein Shams</a> <span className="time-meta pull-right">12:10</span></h6>
-                                                        <small className="cl-success">Online</small>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -371,7 +251,7 @@ export default function Messages() {
 
                                 </div>
 
-                                <div className="row message" id="conversation">
+                                <div className="row message animated slideInLeft" id="conversation">
                                     <ul className="chat-list padd-20">
                                         <li>
                                             <div className="chat-img"><img src="assets/dist/img/user-6.jpg" alt="user" /></div>
@@ -449,4 +329,4 @@ export default function Messages() {
             </div>
         </Layout>
     )
-}
+});
