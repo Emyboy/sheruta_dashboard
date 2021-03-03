@@ -60,41 +60,14 @@ export const SubmitForm = (props) => {
                         </div>
 
                         <div className="form-group">
-                            <div className="col-md-12"><label className="form-label">Address:</label></div>
+                            <div className="col-md-12"><label className="form-label">Price:</label></div>
                             <div className="col-md-12">
-                                <input type="text" name="address" className="form-control" required="required" />
+                                <input type="number" name="price" className="form-control" required="required" />
                             </div>
-                        </div>
-
-                        <div className="form-group">
-                            <div className="col-md-12"><label className="form-label">City:</label></div>
+                            <div className="col-md-12"><label className="form-label">Price:</label></div>
                             <div className="col-md-12">
-                                <input type="text" name="city" className="form-control" required="required" />
+                                <input type="number" name="price" className="form-control" required="required" />
                             </div>
-                        </div>
-
-                        <div className="form-group">
-                            <div className="col-md-12"><label className="form-label">State:</label></div>
-                            <div className="col-md-12">
-                                <input type="text" name="state" className="form-control" required="required" />
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <div className="col-md-12"><label className="form-label">Zip / Postal Code:</label></div>
-                            <div className="col-md-12">
-                                <input type="text" name="zip_code" className="form-control" required="required" />
-                            </div>
-                        </div>
-
-                        <div className="form-group">
-                            <div className="col-md-12"><label className="form-label">Phone Number:</label></div>
-                            <div className="col-md-12"><input type="text" name="phone_number" className="form-control" required="required" /></div>
-                        </div>
-
-                        <div className="form-group">
-                            <div className="col-md-12"><label className="form-label">Email Address:</label></div>
-                            <div className="col-md-12"><input type="text" name="email_address" className="form-control" required="required" /></div>
                         </div>
 
                     </div>
