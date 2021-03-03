@@ -5,6 +5,7 @@ const initialState = {
     agent: null,
     jwt: null,
     loading: false,
+    error: null
 }
 
 export default (state = initialState, { type, payload }) => {

@@ -34,7 +34,8 @@ export default connect(
         status: 'loading',
         message: null,
         userData: null,
-        loading: false
+        loading: false,
+        error: null
     });
 
     const [data, setData] = useState({
@@ -70,7 +71,7 @@ export default connect(
                 console.log(res)
             })
             .catch(err => {
-                setState({ ...state, loading: false })
+                setState({ ...state, loading: false, error: 'Something went wrong please try again' })
                 console.log(err)
             })
     }
@@ -136,6 +137,9 @@ export default connect(
                         <div className="login-container animated fadeInRightBig">
 
                             <h2 className="text-center text-upper">Signup</h2>
+                            {state.error ? <div class="alert alert-danger">
+                                {state.error}
+                            </div> : null}
                             <form className="form-horizontal">
 
                                 <div className="form-group">

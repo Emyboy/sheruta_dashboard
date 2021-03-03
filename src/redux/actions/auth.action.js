@@ -6,7 +6,7 @@ import store from "../store/store"
 export const loginAgent = data => dispatch => {
     dispatch({
         type: 'SET_AUTH_STATE',
-        payload: { loading: true }
+        payload: { loading: true, error: null }
     })
     axios(process.env.REACT_APP_API_URL + '/auth/local', {
         data,
@@ -23,14 +23,28 @@ export const loginAgent = data => dispatch => {
                         loading: false
                     }
                 })
+            }else {
+                dispatch({
+                    type: 'SET_AUTH_STATE',
+                    payload: {
+                        error: 'Sorry, Account doesn\'t belong to an agent.',
+                        loading: false
+                    }
+                })
             }
             // localStorage.setItem('auth', JSON.stringify(store.getState().auth))
         })
         .catch(err => {
             dispatch({
                 type: 'SET_AUTH_STATE',
-                payload: { loading: false }
+                payload: { loading: false, error: 'Something went wrong please try again.' }
             })
+            setTimeout(() => {
+                dispatch({
+                    type: 'SET_AUTH_STATE',
+                    payload: { error: null }
+                })
+            }, 3000);
             console.log(err)
         })
 }

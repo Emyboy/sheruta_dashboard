@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './assets/dist/css/animate.css';
 import './assets/plugins/bootstrap-slider/slider.css';
@@ -29,6 +29,8 @@ import 'primeicons/primeicons.css';
 // import 'primereact/resources/themes/arya-green/theme.css'
 import 'primereact/resources/themes/saga-green/theme.css'
 import { SubmitProperty } from './pages/SubmitProperty/SubmitProperty';
+// import io from 'socket.io-client';
+// const socket = io(process.env.REACT_APP_API_URL);
 
 if (localStorage.getItem('auth')) {
   store.dispatch({
@@ -38,6 +40,9 @@ if (localStorage.getItem('auth')) {
 }
 
 function App() {
+  // useEffect(() => {
+    
+  // }, [])
   return (
     <Provider store={store}>
       <BrowserRouter>

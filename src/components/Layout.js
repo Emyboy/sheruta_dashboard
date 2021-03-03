@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import store from '../redux/store/store'
@@ -37,9 +38,10 @@ export const HeaderNav = ({
     title,
     subTitle
 }) => {
+    const history = useHistory()
     return <div style={{ zIndex: 100 }} className='pl-2 nav card shadow fixed-top animated fadeInDown'>
         <div className='row'>
-            <div className='p-2 pr-3'>
+            <div className='p-2 pr-3' onClick={() => history.goBack()}>
                 <i className='ti-angle-left' style={{ fontSize: '26px' }}></i>
             </div>
             <div>
@@ -106,7 +108,7 @@ export default connect(
                                 <EachNav onClick={toggleSideNav} icon='ti ti-list' name='Properties' to='/properties' active={currentPage === 'properties'} />
                                 <EachNav onClick={toggleSideNav} icon='ti ti-bell' name='Notifications' to='/notifications' active={currentPage === 'notification'} badge={22} />
                                 <EachNav onClick={toggleSideNav} icon='ti ti-pencil' name='Blog' to='/blog' active={currentPage === 'blog'} />
-                                <EachNav onClick={props.logoutAgent} icon='ti ti-power-off' name='Logout' to='#' active={currentPage === null} />
+                                <EachNav onClick={props.logoutAgent} icon='ti ti-power-off' name='Logout' to='/login' active={currentPage === null} />
                             </ul>
                         </div>
 

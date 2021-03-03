@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import store from '../../redux/store/store';
 import { loginAgent } from '../../redux/actions/auth.action';
 
-const mapStateToProps = state =>({
+const mapStateToProps = state => ({
     auth: state.auth
 });
 
@@ -39,7 +39,7 @@ export default connect(
     }, [])
 
 
-    if(!props.auth.agent){
+    if (!props.auth.agent) {
         return (
             <div className="container-fluid">
                 <div className="row">
@@ -65,6 +65,9 @@ export default connect(
                         <div className="login-container animated fadeInRightBig">
 
                             <h2 className="text-center text-upper">Login</h2>
+                            {props.auth.error ? <div class="alert alert-danger">
+                                {props.auth.error}
+                            </div> : null}
                             <form className="form-horizontal" onSubmit={loginUser}>
 
                                 <div className="form-group">
@@ -105,7 +108,7 @@ export default connect(
                 </div>
             </div>
         )
-    }else {
+    } else {
         return <Redirect to='/' />
     }
 });
