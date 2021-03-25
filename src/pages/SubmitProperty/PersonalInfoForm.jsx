@@ -6,6 +6,7 @@ export const PersonalInfoForm = (props) => {
 
     const goBack = () => {
         props.setState({ 
+            ...props.state,
             display: 'categories'
         })
     }
@@ -102,6 +103,7 @@ export const PersonalInfoForm = (props) => {
                         <button className='btn btn-primary'>Save To Profile<i className='fa fa-save ml-2'></i></button>
                         <button onClick={() => {
                             props.setState({
+                                ...props.state,
                                 display: 'form'
                             })
                         }} className="btn gredient-btn btn-success">Next</button>

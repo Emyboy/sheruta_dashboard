@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { HeaderNav } from '../../components/Layout'
 import Categories from './Categories'
@@ -10,23 +10,39 @@ import { ProgressBar } from 'primereact/progressbar';
 export const SubmitProperty = (props) => {
     const [state, setState] = useState({
         display: 'categories',
-        category: null
+        category: null,
+        amenities: [],
+        name: null,
+        bedroom: 0,
+        bathroom: 0,
+        sittingroom: 0,
+        location: null,
+        toilet: 0,
+        price: null,
+        description: null,
+        statu: null
     })
 
     const handleFirstNext = () => {
         if (state.category) {
-            console.log(state)
+            // console.log(state)
             if (state.category.requires_personal_info) {
                 setState({
+                    ...state,
                     display: 'personal_info'
                 })
             } else {
                 setState({
+                    ...state,
                     display: 'form'
                 })
             }
         }
     }
+
+    useEffect(() => {
+        console.log('STATE --', state)
+    }, [state])
 
     return (
         <div style={{ background: '#f2f7fb' }}>
@@ -62,7 +78,7 @@ export const SubmitProperty = (props) => {
                                                     {/* <p>Complete</p> */}
                                                 </div>
 
-                                            </div>:null
+                                            </div> : null
                                         }
                                     </div>
 
@@ -94,11 +110,11 @@ export const SubmitProperty = (props) => {
                                         }
                                         {
                                             state.display === 'loading' ?
-                                                <div className="row setup-content animated bounceInUp" id="step-4">
+                                                <div className="row setup-content" id="step-4">
                                                     <div className="col-md-12">
                                                         <div className="complete-payment">
-                                                            <div className="text-center">
-                                                                <img src="https://lh3.googleusercontent.com/proxy/bMFIpytOCaZCj2F3HW44EAwW00QYvsG2wlcQkz0VtcsxvkYpt5isdWL66VGs3--XbmfYXNnyN-5OB4CsAXXw2ddu" style={{ width: '200px' }} className="img-responsive" alt="" />
+                                                            <div className="text-center animated bounceInUp">
+                                                                <img src="https://media2.giphy.com/media/RIBOU83EKnHyJadF9V/giphy.gif" style={{ width: '200px' }} className="img-responsive" alt="" />
                                                                 <h2>Uploading..</h2>
                                                                 <p>This may take some time</p>
                                                             </div>

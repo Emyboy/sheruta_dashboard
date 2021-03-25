@@ -20,13 +20,14 @@ export default function SubmitImage(props) {
     }
     return (
         <div className='mt-4'>
-            <SubmitHeading goBack={() => props.setState({ display: 'form' })} title='Select Image(s)' />
+            <SubmitHeading goBack={() => props.setState({ ...props.state, display: 'form' })} title='Select Image(s)' />
             <Toast ref={toast}></Toast>
             <FileUpload name="demo[]" url="./upload.php" onUpload={onUpload} multiple accept="image/*" maxFileSize={500000}
                 emptyTemplate={<p className="p-m-0">Drag and drop files to here to upload.</p>} />
             <hr />
             <button onClick={() => {
-                props.setState({ display: 'loading' })
+                props.setState({ ...props.state, display: 'loading' })
+                console.log('sending ----', props.state)
             }} className='btn btn-success  pull-right'>Upload</button>
         </div>
     )
