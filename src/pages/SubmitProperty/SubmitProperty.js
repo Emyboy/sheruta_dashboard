@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { HeaderNav } from '../../components/Layout'
 import Categories from './Categories'
@@ -6,31 +6,59 @@ import PersonalInfoForm from './PersonalInfoForm'
 import { SubmitForm } from './SubmitForm'
 import SubmitImage from './SubmitImage';
 import { ProgressBar } from 'primereact/progressbar';
+import { Modal } from 'react-bootstrap'
 
 export const SubmitProperty = (props) => {
+    const [personalInfo, setPersonalInfo] = useState(false);
     const [state, setState] = useState({
         display: 'categories',
-        category: null
+        category: null,
+        amenities: [],
+        name: null,
+        bedroom: 0,
+        bathroom: 0,
+        sittingroom: 0,
+        location: null,
+        toilet: 0,
+        price: null,
+        description: null,
+        statu: null
     })
 
     const handleFirstNext = () => {
         if (state.category) {
-            console.log(state)
+            // console.log(state)
             if (state.category.requires_personal_info) {
-                setState({
-                    display: 'personal_info'
-                })
+                setPersonalInfo(true)
+                // setState({
+                //     ...state,
+                //     display: 'personal_info'
+                // })
             } else {
                 setState({
+                    ...state,
                     display: 'form'
                 })
             }
         }
     }
 
+    useEffect(() => {
+        console.log('STATE --', state)
+    }, [state])
+
     return (
         <div style={{ background: '#f2f7fb' }}>
             <HeaderNav title='Submit Property' subTitle='Add new property to your collection' to='' />
+            <Modal show={personalInfo} size='lg'>
+                <Modal.Body>
+                    <PersonalInfoForm
+                        state={state}
+                        setState={setState}
+                        setPersonalInfo={setPersonalInfo}
+                    />
+                </Modal.Body>
+            </Modal>
             <div className='container mt-5'>
                 <div className="row pt-5">
                     <div className="col-md-12">
@@ -38,33 +66,29 @@ export const SubmitProperty = (props) => {
 
                             <div className="card-body">
                                 <div className="col-md-12 col-sm-12">
-                                    <div className="stepwizard">
+                                    {/* <div className="stepwizard">
 
                                         {
                                             state.display !== 'loading' ? <div className="stepwizard-row setup-panel">
                                                 <div className="form-wizard-setup first">
                                                     <a href="#step-1" className={`btn circle-button btn-default ${state.display === 'categories' ? 'active-wizard' : null}`}><i className="fa fa-circle"></i></a>
-                                                    {/* <p>Type</p> */}
                                                 </div>
 
                                                 <div className="form-wizard-setup">
                                                     <a href="#step-2" className={`btn btn-default circle-button ${state.display === 'personal_info' ? 'active-wizard' : null}`}><i className="fa fa-user"></i></a>
-                                                    {/* <p>Personal Info</p> */}
                                                 </div>
 
                                                 <div className="form-wizard-setup">
                                                     <a href="#step-3" className={`btn btn-default circle-button ${state.display === 'form' ? 'active-wizard' : null}`}><i className="fa fa-table"></i></a>
-                                                    {/* <p>Secure Payment</p> */}
                                                 </div>
 
                                                 <div className="form-wizard-setup last">
                                                     <a href="#step-4" className={`btn btn-default circle-button ${state.display === 'image' ? 'active-wizard' : null}`}><i className="fa fa-image"></i></a>
-                                                    {/* <p>Complete</p> */}
                                                 </div>
 
-                                            </div>:null
+                                            </div> : null
                                         }
-                                    </div>
+                                    </div> */}
 
                                     <form>
                                         {state.display === 'categories' ?
@@ -74,12 +98,12 @@ export const SubmitProperty = (props) => {
                                                 handleFirstNext={handleFirstNext}
                                             /> : null
                                         }
-                                        {state.display === 'personal_info' ?
+                                        {/* {state.display === 'personal_info' ?
                                             <PersonalInfoForm
                                                 state={state}
                                                 setState={setState}
                                             /> : null
-                                        }
+                                        } */}
                                         {state.display === 'form' ?
                                             <SubmitForm
                                                 state={state}
@@ -94,11 +118,11 @@ export const SubmitProperty = (props) => {
                                         }
                                         {
                                             state.display === 'loading' ?
-                                                <div className="row setup-content animated bounceInUp" id="step-4">
+                                                <div className="row setup-content" id="step-4">
                                                     <div className="col-md-12">
                                                         <div className="complete-payment">
-                                                            <div className="text-center">
-                                                                <img src="https://lh3.googleusercontent.com/proxy/bMFIpytOCaZCj2F3HW44EAwW00QYvsG2wlcQkz0VtcsxvkYpt5isdWL66VGs3--XbmfYXNnyN-5OB4CsAXXw2ddu" style={{ width: '200px' }} className="img-responsive" alt="" />
+                                                            <div className="text-center animated bounceInUp">
+                                                                <img src="https://media2.giphy.com/media/RIBOU83EKnHyJadF9V/giphy.gif" style={{ width: '200px' }} className="img-responsive" alt="" />
                                                                 <h2>Uploading..</h2>
                                                                 <p>This may take some time</p>
                                                             </div>
