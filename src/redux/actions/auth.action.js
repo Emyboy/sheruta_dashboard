@@ -37,7 +37,7 @@ export const loginAgent = data => dispatch => {
         .catch(err => {
             dispatch({
                 type: 'SET_AUTH_STATE',
-                payload: { loading: false, error: 'Something went wrong please try again.' }
+                payload: { loading: false, error: err.response.data.message[0].messages[0].message }
             })
             setTimeout(() => {
                 dispatch({
@@ -45,7 +45,7 @@ export const loginAgent = data => dispatch => {
                     payload: { error: null }
                 })
             }, 3000);
-            console.log(err)
+            // console.log(err.response.data.message[0].messages[0].message)
         })
 }
 

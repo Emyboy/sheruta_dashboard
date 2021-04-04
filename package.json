@@ -1,6 +1,7 @@
 {
   "name": "sheruta_dashboard",
   "version": "0.1.0",
+  "homepage": "http://sheruta.ng/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
