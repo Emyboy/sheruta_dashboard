@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { connect } from 'react-redux'
 import { HeaderNav } from '../../components/Layout'
 import Categories from './Categories'
@@ -7,6 +7,7 @@ import { SubmitForm } from './SubmitForm'
 import SubmitImage from './SubmitImage';
 import { ProgressBar } from 'primereact/progressbar';
 import { Modal } from 'react-bootstrap'
+
 
 export const SubmitProperty = (props) => {
     const [personalInfo, setPersonalInfo] = useState(false);
@@ -41,6 +42,10 @@ export const SubmitProperty = (props) => {
                 })
             }
         }
+    }
+
+    const handleSubmit = () => {
+        console.log('sending ---', state);
     }
 
     useEffect(() => {

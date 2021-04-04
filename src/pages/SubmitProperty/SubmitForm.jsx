@@ -55,7 +55,7 @@ export const SubmitForm = (props) => {
             <SubmitHeading goBack={() => {
                 props.setState({
                     ...props.state,
-                    display: 'personal_info'
+                    display: 'categories'
                 })
             }} title='Property Information' />
             <div className="row setup-content animated fadeIn" id="step-2">
