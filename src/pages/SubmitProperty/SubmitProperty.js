@@ -19,10 +19,12 @@ export const SubmitProperty = (props) => {
         bathroom: 0,
         sittingroom: 0,
         location: null,
+        google_location: null,
         toilet: 0,
         price: null,
         description: null,
-        statu: null
+        statu: null,
+        progress: 0
     })
 
     const handleFirstNext = () => {
@@ -127,7 +129,7 @@ export const SubmitProperty = (props) => {
                                                                 <p>This may take some time</p>
                                                             </div>
                                                         </div>
-                                                        <ProgressBar value={58}></ProgressBar>
+                                                        <ProgressBar value={state.progress}></ProgressBar>
                                                     </div>
                                                 </div> : null
                                         }

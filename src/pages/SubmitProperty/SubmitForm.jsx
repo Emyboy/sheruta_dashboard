@@ -42,20 +42,25 @@ export const SubmitForm = (props) => {
     }
 
     useEffect(() => {
-        props.setState({
-            ...props.state,
-            amenities: []
-        })
-        getAllAmenities()
-        getAllStatus()
-    }, []);
+        // props.setState({
+        //     ...props.state,
+        //     amenities: []
+        // })
+        if (state.amenities.length === 0) {
+            getAllAmenities()
+        }
+        if (state.status.length === 0) {
+            getAllStatus()
+        }
+        console.log('STATE', state)
+    }, [state]);
 
     return (
         <div className='mt-4'>
             <SubmitHeading goBack={() => {
                 props.setState({
                     ...props.state,
-                    display: 'personal_info'
+                    display: 'categories'
                 })
             }} title='Property Information' />
             <div className="row setup-content animated fadeIn" id="step-2">
@@ -106,7 +111,22 @@ export const SubmitForm = (props) => {
                                     <div className="form-group">
                                         <label for="inputName" className="control-label">Location</label>
                                         <GooglePlacesAutocomplete
-                                            apiKey={process.env.REACT_APP_PLACES_API_KEY}
+                                            apiKey={process.env.REACT_APP_GOOGLE_PLACES_API_KEY}
+                                            apiOptions={{ language: 'en', region: 'ng' }}
+                                            selectProps={{
+                                                // props.state.location,
+                                                onChange: e => {
+                                                    console.log(e)
+                                                    props.setState({ ...props.state, google_location: e, location: e.label })
+                                                },
+                                                placeholder:
+                                                    'Start typing your address',
+                                            }}
+                                            autocompletionRequest={{
+                                                componentRestrictions: {
+                                                    country: ['ng'],
+                                                },
+                                            }}
                                         />
                                     </div>
                                 </div>
@@ -128,6 +148,8 @@ export const SubmitForm = (props) => {
                                         <label for="inputEmail" className="control-label">Status</label>
                                         <Select
                                             options={state.status.map(val => ({ value: val.id, label: val.name.toUpperCase() }))}
+                                            onChange={e => props.setState({ ...props.state, statu: e })}
+                                            value={props.state.statu}
                                         />
                                         <div className="help-block with-errors"></div>
                                     </div>
@@ -140,17 +162,36 @@ export const SubmitForm = (props) => {
 
 
                         <div className="form-group">
-                            <div className="col-sm-6">
+                            <div className="col-sm-12">
                                 <label for="inputName" className="control-label">Amenities</label>
-                                <MultiSelect value={props.state.amenities} options={state.amenities.map(val => ({ code: val.id, name: val.name }))} onChange={(e) => {
+                                {/* <MultiSelect value={props.state.amenities} options={state.amenities.map(val => ({ code: val.id, name: val.name }))} onChange={(e) => {
                                     props.setState({
                                         ...props.state,
                                         amenities: e.value
                                     })
                                     // console.log(e)
-                                }} optionLabel="name" placeholder="Select Multiple" display="chip" />
+                                }} optionLabel="name" placeholder="Select Multiple" display="chip" /> */}
+                                <Select
+                                    // options={state.amenities.map((val) => {
+                                    //     console.log('each amen ---', val)
+                                    //     return { value: val.id, label: val.name.toUpperCase() }
+                                    // })}
+                                    onChange={e => props.setState({ ...props.state, amenities: e })}
+                                    value={props.state.amenities}
+                                    options={state.amenities.map(val => ({ value: val.id, label: val.name.toUpperCase() }))}
+                                    isMulti
+                                // options={options}
+                                />
                             </div>
 
+                        </div>
+
+                        <div className="col-sm-12">
+                            <div className="form-group">
+                                <label for="inputEmail" className="control-label">Tell Us About This Property</label>
+                                <textarea rows='5' className="form-control" onChange={e => props.setState({ ...props.state, description: e.target.value })} required={true} />
+                                <div className="help-block with-errors"></div>
+                            </div>
                         </div>
 
                     </div>

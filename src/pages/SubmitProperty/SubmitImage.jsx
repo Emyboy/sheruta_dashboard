@@ -1,34 +1,166 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
 import SubmitHeading from './SubmitHeading';
+import { CardImg, Modal } from 'react-bootstrap';
+import { storage } from '../../Firebase';
+import store from '../../redux/store/store';
+import { v4 as uuidv4 } from 'uuid';
+import { Spinner } from 'react-activity';
+import axios from 'axios';
+
+const folderName = uuidv4();
+const auth = store.getState().auth;
 
 export default function SubmitImage(props) {
-
+    const [state, setState] = useState({
+        loading: false,
+        progress: 0,
+        files: [],
+        image_urls: []
+    })
     const toast = useRef(null);
 
-    const onUpload = () => {
-        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
+    const onDrop = useCallback(acceptedFiles => {
+        // Do something with the files
+        console.log('SELECTED FILE', acceptedFiles)
+        state.files.push(acceptedFiles[0])
+    }, [state.files])
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    const removeFile = file => {
+        const newArray = []
+        state.files.map(val => file !== val ? newArray.push(val) : null)
+        setState({ ...state, files: newArray })
+        console.log('NEW STATE --', state)
     }
 
-    const onBasicUpload = () => {
-        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+    const formatData = () => {
+        const parentState = props.state;
+        return {
+            ...parentState,
+            amenities: parentState.amenities.map(val => val.value),
+            category: parentState.category.id,
+            statu: parentState.statu.value
+        }
     }
 
-    const onBasicUploadAuto = () => {
-        toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Auto Mode' });
+    const sendToDb = () => {
+        console.log('sending to db ---', formatData())
+        axios(process.env.REACT_APP_API_URL + '/properties', {
+            method: 'POST',
+            headers: {
+                Authorization:
+                    `Bearer ${auth.jwt}`,
+            },
+            data: {
+                ...formatData(),
+                image_urls: state.image_urls,
+                uid: folderName,
+                agent: auth.agent.id
+            }
+        })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
+
+    const uploadImages = () => {
+        props.setState({ ...props.state, display: 'loading' })
+        state.files.map((val, i) => {
+            var uploadTask = storage.ref().child(`images/properties/${auth.agent.id}/${folderName}/image_${i}`).put(val);
+            uploadTask.on('state_changed', // or 'state_changed'
+                (snapshot) => {
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log('Upload is ' + progress + '% done');
+                    setState({ ...state, progress })
+                },
+                (error) => {
+                    switch (error.code) {
+                        case 'storage/unauthorized':
+                            // User doesn't have permission to access the object
+                            break;
+                        case 'storage/canceled':
+                            // User canceled the upload
+                            break;
+
+                        // ...
+
+                        case 'storage/unknown':
+                            // Unknown error occurred, inspect error.serverResponse
+                            break;
+                    }
+                },
+                () => {
+                    // Upload completed successfully, now we can get the download URL
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        console.log('File available at', downloadURL);
+                        state.image_urls.push(downloadURL)
+                        console.log('IMAGE URLS --', state.image_urls)
+                        console.log(state.image_urls.length)
+                        if (state.image_urls.length === state.files.length) {
+                            sendToDb()
+                        }
+                    });
+                }
+            );
+
+
+        });
+
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault()
+        setState({ ...state, loading: true })
+        uploadImages()
+        console.log('SENDING ---', { ...props.state, files: state.files })
+    }
+
+    // React.useEffect(() => {
+
+    // }, [state.loading])
+
+    console.log('STATE ---', state);
     return (
-        <div className='mt-4'>
-            <SubmitHeading goBack={() => props.setState({ ...props.state, display: 'form' })} title='Select Image(s)' />
-            <Toast ref={toast}></Toast>
-            <FileUpload name="demo[]" url="./upload.php" onUpload={onUpload} multiple accept="image/*" maxFileSize={500000}
-                emptyTemplate={<p className="p-m-0">Drag and drop files to here to upload.</p>} />
-            <hr />
-            <button onClick={() => {
-                props.setState({ ...props.state, display: 'loading' })
-                console.log('sending ----', props.state)
-            }} className='btn btn-success  pull-right'>Upload</button>
+        <div className=''>
+            <Modal show={state.loading} onHide={() => { }}>
+                <Modal.Body className='text-center mt-4 mb-4'>
+                    <Spinner size={20} color='green' />
+                    <h5>{state.progress}% Uploading...</h5>
+                </Modal.Body>
+            </Modal>
+            <div className=''>
+                {state.files.map((val, i) => {
+                    return <>
+                        <tr className='border m-0 d-flex justify-content-between p-1' key={i}>
+                            <td><CardImg src={URL.createObjectURL(val)} responsive style={{ height: '90px', width: '90px' }} /></td>
+                            {/* <td>Otto</td> */}
+                            <td><span onClick={() => removeFile(val)} className='btn-danger btn mt-4'>Remove</span></td>
+                        </tr>
+                    </>
+                })}
+
+            </div>
+            <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <div className="form-group br">
+                    <div className="dropzone dz-clickable">
+                        <div className="dz-default dz-message">
+                            <i className="ti-gallery"></i>
+                            {
+                                isDragActive ?
+                                    <span>Drag &amp; Drop </span> :
+                                    <p>Click to select files</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onClick={handleSubmit} className='btn btn-success fixed-right'>Submit Property</button>
         </div>
     )
 }
