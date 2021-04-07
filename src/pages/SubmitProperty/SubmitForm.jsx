@@ -53,7 +53,7 @@ export const SubmitForm = (props) => {
             getAllStatus()
         }
         console.log('STATE', state)
-    }, [state]);
+    }, []);
 
     return (
         <div className='mt-4'>
