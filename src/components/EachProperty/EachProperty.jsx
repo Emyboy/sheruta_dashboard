@@ -4,7 +4,7 @@ export default function EachProperty({
     data
 }) {
     return (
-        <div className="col-md-4 col-sm-6">
+        <div className="col-md-4 col-sm-6 link">
             {/* <div className="card">
                 <img className="card-img-top" src={data.image_urls[0]} alt="Card image cap" />
                 <div className="card-block">

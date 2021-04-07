@@ -13,6 +13,8 @@ import axios from 'axios';
 const folderName = uuidv4();
 const auth = store.getState().auth;
 
+console.log('REDX AUTH ---', auth)
+
 export default function SubmitImage(props) {
     const [state, setState] = useState({
         loading: false,

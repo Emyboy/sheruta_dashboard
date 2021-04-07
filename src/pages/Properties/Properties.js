@@ -43,18 +43,20 @@ export default connect(
                 <div className='row'>
                     {
                         props.agent.properties.map((val, i) => {
+                            console.log('EACH Properties --', val)
                             return <EachProperty key={i} data={val} />
                         })
                     }
                 </div>
-                <Link to='/submit/property' onClick={() => setState({ showAdd: !state.showAdd })} className="scroll-to-top cl-white theme-bg shadow-lg" href="#add-property" style={{
+                <Link to='/submit/property' onClick={() => setState({ showAdd: !state.showAdd })} className="shadow-lg scroll-to-top cl-white theme-bg shadow-lg" href="#add-property" style={{
                     display: 'inline',
                     width: '80px',
                     height: '80px',
                     paddingTop: '17px',
                     fontSize: '53px',
                     marginBottom: '20px',
-                    borderRadius: '100px'
+                    borderRadius: '100px',
+                    zIndex: 100
                 }}>
                     <i className="fa fa-plus ti-angle-double-up"></i>
                 </Link>
