@@ -78,20 +78,20 @@ export default connect(
 
 
     useEffect(() => {
+        // console.log('GETTING USER DATA ---', props.match.params.token)
         document.querySelector('body').classList.remove('fixed-nav')
         document.querySelector('body').classList.remove('sticky-footer');
 
-        axios(process.env.REACT_APP_API_URL + '/users/' + JWT.id, {
-            method: 'GET',
+        axios(process.env.REACT_APP_API_URL + '/users/me', {
             headers: {
                 Authorization:
                     `Bearer ${props.match.params.token}`,
             },
         })
             .then(res => {
-                console.log(res)
+                console.log('res -----', res)
                 if (res.status === 200) {
-                    if (res.data.agent) {
+                    if (res.data.role.name === 'Agent') {
                         setState({ status: 'login' })
                     } else {
                         setState({ status: 'signup', userData: res.data });
@@ -104,12 +104,42 @@ export default connect(
                 }
             })
             .catch(err => {
+                // console.log('ERROR ------', {...err})
                 setState({
                     status: 'error',
                     message: 'Something went wrong please try again'
                 })
-                // console.log(err)
             })
+
+        // axios(process.env.REACT_APP_API_URL + 'users/me', {
+        //     method: 'GET',
+        //     headers: {
+        //         Authorization:
+        //             `Bearer ${props.match.params.token}`,
+        //     },
+        // })
+        //     .then(res => {
+        //         console.log('res -----', res)
+        //         if (res.status === 200) {
+        //             if (res.data.agent) {
+        //                 setState({ status: 'login' })
+        //             } else {
+        //                 setState({ status: 'signup', userData: res.data });
+        //                 setData({
+        //                     ...data,
+        //                     phone_number: res.data.phone_number,
+        //                     users_permissions_user: res.data.id
+        //                 })
+        //             }
+        //         }
+        //     })
+        //     .catch(err => {
+        //         console.log('ERROR ------', err)
+        //         setState({
+        //             status: 'error',
+        //             message: 'Something went wrong please try again'
+        //         })
+        //     })
     }, [])
 
     if (state.status !== 'login') {

@@ -13,12 +13,13 @@ export const loginAgent = data => dispatch => {
         method: 'POST'
     })
         .then(res => {
-            console.log('USER FOUND ---', res);
+            // console.log('USER FOUND ---', res);
             if (res.data.user.role.name === "Agent") {
+                const token = res.data.jwt
                 axios(process.env.REACT_APP_API_URL + '/agents/me', {
                     headers: {
                         Authorization:
-                            `Bearer ${store.getState().auth.jwt}`,
+                            `Bearer ${token}`,
                     },
                 })
                     .then(agentData => {
@@ -35,6 +36,10 @@ export const loginAgent = data => dispatch => {
                     })
                     .catch(err => {
                         console.log(err);
+                        dispatch({
+                            type: 'SET_AUTH_STATE',
+                            payload: { loading: false, error: null }
+                        })
                     })
 
             } else {
