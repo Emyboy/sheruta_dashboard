@@ -12,8 +12,7 @@ import axios from 'axios';
 
 const folderName = uuidv4();
 const auth = store.getState().auth;
-
-console.log('REDX AUTH ---', auth)
+const theState = JSON.parse(localStorage.getItem('state'))
 
 export default function SubmitImage(props) {
     const [state, setState] = useState({
@@ -64,6 +63,7 @@ export default function SubmitImage(props) {
         })
             .then(res => {
                 console.log(res);
+                props.setState({ ...props.state, display: 'success' })
             })
             .catch(err => {
                 console.log(err)
@@ -73,12 +73,12 @@ export default function SubmitImage(props) {
     const uploadImages = () => {
         props.setState({ ...props.state, display: 'loading' })
         state.files.map((val, i) => {
-            var uploadTask = storage.ref().child(`images/properties/${auth.agent.id}/${folderName}/image_${i}`).put(val);
+            var uploadTask = storage.ref().child(`images/properties/${theState.auth.agent.id}/${folderName}/image_${i}`).put(val);
             uploadTask.on('state_changed', // or 'state_changed'
                 (snapshot) => {
                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     console.log('Upload is ' + progress + '% done');
-                    setState({ ...state, progress })
+                    props.setState({ ...props.state, progress: progress, display: 'loading' })
                 },
                 (error) => {
                     switch (error.code) {
@@ -126,7 +126,9 @@ export default function SubmitImage(props) {
 
     // }, [state.loading])
 
-    console.log('STATE ---', state);
+    console.log('LOCAL STATE ---', theState);
+    console.log('REDX AUTH ---', auth)
+
     return (
         <div className=''>
             <Modal show={state.loading} onHide={() => { }}>

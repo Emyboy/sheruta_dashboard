@@ -85,7 +85,7 @@ export default connect(
 
 
     // if (JSON.parse(localStorage.getItem('auth')).agent){
-    if(props.auth.user && props.auth.agent){
+    if(props.auth.user && props.auth.user.role.name === 'Agent'){
         return (
             <>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -106,6 +106,7 @@ export default connect(
                                 <EachNav onClick={toggleSideNav} icon='ti ti-user' name='Profile' to='/profile' active={currentPage === 'profile'} />
                                 <EachNav onClick={toggleSideNav} icon='ti-email' name='Messages' to='/messages' active={currentPage === 'messages'} badge={2} />
                                 <EachNav onClick={toggleSideNav} icon='ti ti-list' name='Properties' to='/properties' active={currentPage === 'properties'} />
+                                <EachNav onClick={toggleSideNav} icon='ti ti-money' name='Payments' to='/payments' active={currentPage === 'payments'} />
                                 <EachNav onClick={toggleSideNav} icon='ti ti-bell' name='Notifications' to='/notifications' active={currentPage === 'notification'} badge={22} />
                                 <EachNav onClick={toggleSideNav} icon='ti ti-pencil' name='Blog' to='/blog' active={currentPage === 'blog'} />
                                 <EachNav onClick={props.logoutAgent} icon='ti ti-power-off' name='Logout' to='/login' active={currentPage === null} />

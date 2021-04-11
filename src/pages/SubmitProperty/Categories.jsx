@@ -29,7 +29,10 @@ const Categories = props => {
                 disabled={!state.category}
                 className="btn nextBtn btn-success pull-right"
                 type="button"
-                onClick={handleFirstNext}
+                onClick={() => setState({
+                    ...state,
+                    display: 'services'
+                })}
             >
                 Next
             </button>

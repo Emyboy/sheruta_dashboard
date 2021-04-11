@@ -29,7 +29,7 @@ export const PersonalInfoForm = (props) => {
         console.log('Feting data')
         setState({ ...state, loading: true })
         console.log('TOKEN --', auth.jwt)
-        axios(process.env.REACT_APP_API_URL + '/personal-infos/?agent=' + auth.agent.id, {
+        axios(process.env.REACT_APP_API_URL + '/personal-infos/agent', {
             headers: {
                 Authorization:
                     `Bearer ${auth.jwt}`,
@@ -61,7 +61,7 @@ export const PersonalInfoForm = (props) => {
             data: { ...data, agent: auth.agent.id }
         })
             .then(res => {
-                props.setState({ display: 'form'})
+                props.setState({ ...props.state, display: 'form', persoan_info: res.data.id })
                 props.setPersonalInfo(false)
                 console.log('update res ---', res)
             })

@@ -7,6 +7,7 @@ import { SubmitForm } from './SubmitForm'
 import SubmitImage from './SubmitImage';
 import { ProgressBar } from 'primereact/progressbar';
 import { Modal } from 'react-bootstrap'
+import ServicesForm from './ServicesForm'
 
 export const SubmitProperty = (props) => {
     const [personalInfo, setPersonalInfo] = useState(false);
@@ -24,13 +25,15 @@ export const SubmitProperty = (props) => {
         price: null,
         description: null,
         statu: null,
-        progress: 0
+        progress: "0",
+        service: null,
+        personal_info: null
     })
 
     const handleFirstNext = () => {
-        if (state.category) {
+        if (state.service) {
             // console.log(state)
-            if (state.category.requires_personal_info) {
+            if (state.service.requires_personal_info) {
                 setPersonalInfo(true)
                 // setState({
                 //     ...state,
@@ -112,6 +115,13 @@ export const SubmitProperty = (props) => {
                                                 setState={setState}
                                             /> : null
                                         }
+                                        {state.display === 'services' ?
+                                            <ServicesForm
+                                                state={state}
+                                                setState={setState}
+                                                handleFirstNext={handleFirstNext}
+                                            /> : null
+                                        }
                                         {state.display === 'image' ?
                                             <SubmitImage
                                                 state={state}
@@ -124,7 +134,7 @@ export const SubmitProperty = (props) => {
                                                     <div className="col-md-12">
                                                         <div className="complete-payment">
                                                             <div className="text-center animated bounceInUp">
-                                                                <img src="https://media2.giphy.com/media/RIBOU83EKnHyJadF9V/giphy.gif" style={{ width: '200px' }} className="img-responsive" alt="" />
+                                                                <img src="https://media2.giphy.com/media/RIBOU83EKnHyJadF9V/giphy.gif" style={{ width: '100px' }} className="img-responsive" alt="" />
                                                                 <h2>Uploading..</h2>
                                                                 <p>This may take some time</p>
                                                             </div>
