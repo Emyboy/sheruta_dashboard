@@ -9,12 +9,19 @@ import store from '../../redux/store/store';
 import { v4 as uuidv4 } from 'uuid';
 import { Spinner } from 'react-activity';
 import axios from 'axios';
+import { connect } from 'react-redux';
 
 const folderName = uuidv4();
 const auth = store.getState().auth;
 const theState = JSON.parse(localStorage.getItem('state'))
 
-export default function SubmitImage(props) {
+const mapStateToProps = state =>({
+    auth: state.auth
+})
+
+export default connect(
+    mapStateToProps
+)(props=> {
     const [state, setState] = useState({
         loading: false,
         progress: 0,
@@ -71,9 +78,10 @@ export default function SubmitImage(props) {
     }
 
     const uploadImages = () => {
+        console.log('uploading image for ----', props)
         props.setState({ ...props.state, display: 'loading' })
         state.files.map((val, i) => {
-            var uploadTask = storage.ref().child(`images/properties/${theState.auth.agent.id}/${folderName}/image_${i}`).put(val);
+            var uploadTask = storage.ref().child(`images/properties/${props.auth.agent.id}/${folderName}/image_${i}`).put(val);
             uploadTask.on('state_changed', // or 'state_changed'
                 (snapshot) => {
                     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -88,9 +96,6 @@ export default function SubmitImage(props) {
                         case 'storage/canceled':
                             // User canceled the upload
                             break;
-
-                        // ...
-
                         case 'storage/unknown':
                             // Unknown error occurred, inspect error.serverResponse
                             break;
@@ -167,4 +172,4 @@ export default function SubmitImage(props) {
             <button onClick={handleSubmit} className='btn btn-success fixed-right'>Submit Property</button>
         </div>
     )
-}
+})
