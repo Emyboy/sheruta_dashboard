@@ -6,6 +6,7 @@ import Creatable, { makeCreatableSelect } from 'react-select/creatable'
 import Select from 'react-select'
 import { MultiSelect } from 'primereact/multiselect';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import store from '../../redux/store/store'
 
 export const SubmitForm = (props) => {
     const [state, setState] = useState({
@@ -17,10 +18,7 @@ export const SubmitForm = (props) => {
         axios(process.env.REACT_APP_API_URL + '/amenities')
             .then(res => {
                 console.log(res)
-                setState({
-                    ...state,
-                    amenities: res.data
-                })
+                setState({ ...state, amenities: res.data })
             })
             .catch(err => {
                 console.log(err)
@@ -31,31 +29,27 @@ export const SubmitForm = (props) => {
         axios(process.env.REACT_APP_API_URL + '/status')
             .then(res => {
                 console.log(res)
-                setState({
-                    ...state,
-                    status: res.data
-                })
+                setState({ ...state, status: res.data })
             })
             .catch(err => {
                 console.log(err)
             })
     }
 
+
     useEffect(() => {
-        // props.setState({
-        //     ...props.state,
-        //     amenities: []
-        // })
         if (state.amenities.length === 0) {
-            getAllAmenities()
+            getAllAmenities();
         }
+    }, [state.amenities]);
+    useEffect(() => {
         if (state.status.length === 0) {
-            getAllStatus()
+            getAllStatus();
         }
-        console.log('STATE', state)
-    }, [state]);
+    }, [state.status]);
 
     const { data } = props;
+
 
     return (
         <div className='mt-4'>
@@ -152,8 +146,8 @@ export const SubmitForm = (props) => {
                                         <label for="inputEmail" className="control-label">Status</label>
                                         <Select
                                             options={state.status.map(val => ({ value: val.id, label: val.name.toUpperCase() }))}
-                                            onChange={e => props.setState({ ...props.state, statu: e })}
-                                            value={props.state.statu}
+                                            onChange={e => setState({ ...state, status: e })}
+                                            value={state.status}
                                         />
                                         <div className="help-block with-errors"></div>
                                     </div>
@@ -168,23 +162,11 @@ export const SubmitForm = (props) => {
                         <div className="form-group">
                             <div className="col-sm-12">
                                 <label for="inputName" className="control-label">Amenities</label>
-                                {/* <MultiSelect value={props.state.amenities} options={state.amenities.map(val => ({ code: val.id, name: val.name }))} onChange={(e) => {
-                                    props.setState({
-                                        ...props.state,
-                                        amenities: e.value
-                                    })
-                                    // console.log(e)
-                                }} optionLabel="name" placeholder="Select Multiple" display="chip" /> */}
                                 <Select
-                                    // options={state.amenities.map((val) => {
-                                    //     console.log('each amen ---', val)
-                                    //     return { value: val.id, label: val.name.toUpperCase() }
-                                    // })}
-                                    onChange={e => props.setState({ ...props.state, amenities: e })}
+                                    onChange={e => setState({ ...state, amenities: e })}
                                     value={props.state.amenities}
                                     options={state.amenities.map(val => ({ value: val.id, label: val.name.toUpperCase() }))}
                                     isMulti
-                                // options={options}
                                 />
                             </div>
 
@@ -215,7 +197,7 @@ export const SubmitForm = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-
+    view: state.view
 })
 
 const mapDispatchToProps = {

@@ -1,10 +1,10 @@
-
-
 const initialState = {
-    sideNav: false, 
+    sideNav: false,
     notification: false,
     message: false,
-    categories: []
+    categories: [],
+    amenities: [],
+    status: []
 }
 
 export default (state = initialState, { type, payload }) => {

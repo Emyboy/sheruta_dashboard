@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { HeaderNav } from '../../components/Layout'
+import {HeaderNav} from '../../components/Layout'
 import Categories from './Categories'
 import PersonalInfoForm from './PersonalInfoForm'
-import { SubmitForm } from './SubmitForm'
+import SubmitForm from './SubmitForm'
 import SubmitImage from './SubmitImage';
 import { ProgressBar } from 'primereact/progressbar';
 import { Modal } from 'react-bootstrap'
 import ServicesForm from './ServicesForm'
+import axios from 'axios'
+import store from '../../redux/store/store'
 
 export const SubmitProperty = (props) => {
     const [personalInfo, setPersonalInfo] = useState(false);
@@ -27,7 +29,9 @@ export const SubmitProperty = (props) => {
         statu: null,
         progress: "0",
         service: null,
-        personal_info: null
+        personal_info: null,
+        amenities: [],
+        status: []
     })
 
     const handleFirstNext = () => {
@@ -50,7 +54,9 @@ export const SubmitProperty = (props) => {
 
     useEffect(() => {
         console.log('STATE --', state)
-    }, [state])
+    }, [])
+
+
 
     return (
         <div style={{ background: '#f2f7fb' }}>

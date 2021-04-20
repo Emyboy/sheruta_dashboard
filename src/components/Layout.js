@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Link, Redirect } from 'react-router-dom'
 import store from '../redux/store/store'
 import { logoutAgent } from '../redux/actions/auth.action';
+import axios from 'axios'
 
 
 const EachNav = ({
@@ -56,12 +57,14 @@ export default connect(
     mapStateToProps,
     mapDispatch
 )(props => {
+
     const {
         currentPage
     } = props;
 
     const { view } = props;
     useEffect(() => {
+        
         document.querySelector('body').classList.add('fixed-nav')
         document.querySelector('body').classList.add('sticky-footer')
         console.log('PROPS ---', props)
@@ -349,3 +352,5 @@ export default connect(
         return <Redirect to='/login' />
     }
 })
+
+

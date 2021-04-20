@@ -16,7 +16,8 @@ export const PersonalInfoForm = (props) => {
     const [data, setData] = useState({
         gender: null,
         phone_number: auth.agent.phone_number,
-        agent: auth.agent.id
+        agent: auth.agent.id,
+        next_of_kin_address: null
     })
     const goBack = () => {
         props.setState({
@@ -86,7 +87,7 @@ export const PersonalInfoForm = (props) => {
             })
                 .then(res => {
                     setState({ updating: false });
-                    props.setState({ display: 'form' })
+                    props.setState({ ...props.state, display: 'form' })
                     props.setPersonalInfo(false)
                     console.log('RES ---', res)
                 })
@@ -152,9 +153,27 @@ export const PersonalInfoForm = (props) => {
                                 </div>
                             </div>
 
-                        </div>
-
-                        <div className="row mrg-0">
+                            <div className="col-sm-6">
+                                <div className="form-group">
+                                    <label for="inputEmail" className="control-label">Next Of Kin Name <span className='text-danger'>(Required)</span></label>
+                                    <input defaultValue={data ? data.next_of_kin_name : ''} name='next_of_kin_name' type="text" className="form-control" id="inputEmail" placeholder="Ex. Mr Somebody" data-error="Bruh, that email address is invalid" required onChange={e => setData({ ...data, next_of_kin_name: e.target.value })} />
+                                    <div className="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div className="col-sm-6">
+                                <div className="form-group">
+                                    <label for="inputEmail" className="control-label">Next Of Kin Address <span className='text-danger'>(Required)</span></label>
+                                    <input defaultValue={data ? data.next_of_kin_address : ''} name='next_of_kin_address' type="text" className="form-control" id="inputEmail" placeholder="Ex. No 7, somewhere on earth" data-error="Bruh, that email address is invalid" required onChange={e => setData({ ...data, next_of_kin_address: e.target.value })} />
+                                    <div className="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div className="col-sm-6">
+                                <div className="form-group">
+                                    <label for="inputEmail" className="control-label">Next Of Kin Phone NO: <span className='text-danger'>(Required)</span></label>
+                                    <input defaultValue={data ? data.next_of_kin_phone : ''} name='next_of_kin_address' type="number" className="form-control" id="inputEmail" placeholder="Ex. 08081234567" data-error="Bruh, that email address is invalid" required onChange={e => setData({ ...data, next_of_kin_phone: e.target.value })} />
+                                    <div className="help-block with-errors"></div>
+                                </div>
+                            </div>
 
                             <div className="col-sm-6">
                                 <div className="form-group">
@@ -172,6 +191,13 @@ export const PersonalInfoForm = (props) => {
                                 </div>
                             </div>
 
+                            <div className="col-sm-6">
+                                <div className="form-group">
+                                    <label for="inputEmail" className="control-label">Active Phone Number <span className='text-danger'>(Required)</span></label>
+                                    <input defaultValue={data ? data.phone_number : null} name='phone_number' type="text" className="form-control" id="inputEmail" placeholder="Ex. 08012345678" data-error="Bruh, that email address is invalid" required onChange={e => setData({ ...data, phone_number: e.target.value })} />
+                                    <div className="help-block with-errors"></div>
+                                </div>
+                            </div>
 
                             <div className="col-sm-6">
                                 <div className="form-group">
@@ -187,10 +213,12 @@ export const PersonalInfoForm = (props) => {
                                     />
                                 </div>
                             </div>
+
+
                         </div>
 
                         <div className="row mrg-0">
-
+                            
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label for="inputName" className="control-label">Religion</label>
@@ -209,11 +237,17 @@ export const PersonalInfoForm = (props) => {
 
                             <div className="col-sm-6">
                                 <div className="form-group">
-                                    <label for="inputEmail" className="control-label">Active Phone Number <span className='text-danger'>(Required)</span></label>
-                                    <input defaultValue={data ? data.phone_number : null} name='phone_number' type="number" className="form-control" id="inputEmail" placeholder="Ex. 08012345678" data-error="Bruh, that email address is invalid" required onChange={e => setData({ ...data, phone_number: parseInt(e.target.value) })} />
+                                    <label for="inputName" className="control-label">NIN</label>
+                                    <input defaultValue={data ? data.nin : null} name='phone_number' type="text" className="form-control" id="inputEmail" placeholder="Ex. 08012345678" data-error="Bruh, that email address is invalid" required onChange={e => setData({ ...data, nin: `${e.target.value}`})} />
                                     <div className="help-block with-errors"></div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="row mrg-0">
+
+
+                            
 
                         </div>
 

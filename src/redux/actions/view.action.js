@@ -17,3 +17,31 @@ export const getAllCategories = () => dispatch => {
         })
 }
 
+export const getAllStatus = () => dispatch => {
+    axios(process.env.REACT_APP_API_URL + '/status')
+        .then(res => {
+            console.log(res)
+            dispatch({
+                type: 'SET_VIEW_STATE',
+                status: res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+export const getAllAmenities = () => dispatch => {
+    axios(process.env.REACT_APP_API_URL + '/amenities')
+        .then(res => {
+            console.log(res)
+            dispatch({
+                type: 'SET_VIEW_STATE',
+                amenities: res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+

@@ -49,7 +49,7 @@ export default connect(
             ...parentState,
             amenities: parentState.amenities.map(val => val.value),
             category: parentState.category.id,
-            statu: parentState.statu.value
+            statu: parentState.statu? parentState.statu.value: null
         }
     }
 
