@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './assets/dist/css/animate.css';
 import './assets/plugins/bootstrap-slider/slider.css';
 import './assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css';
@@ -13,6 +12,7 @@ import './assets/plugins/bootstrap/css/bootstrap.min.css';
 import './App.css';
 import Layout from './components/Layout';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { ToastProvider } from 'react-toast-notifications';
 
 import { Provider } from 'react-redux';
 import store from './redux/store/store';
@@ -37,9 +37,11 @@ if (localStorage.getItem('auth')) {
 function App() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
+      <ToastProvider>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </ToastProvider>
     </Provider>
   );
 }

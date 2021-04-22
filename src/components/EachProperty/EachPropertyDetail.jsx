@@ -17,23 +17,29 @@ export const EachPropertyDetail = ({
             .then(res => {
                 console.log('API DATA ---', res)
             })
-            .catch(err => { 
+            .catch(err => {
                 console.log('err')
             })
     };
 
     useEffect(() => {
         getPropertyData()
-    },[])
+    }, [])
 
     return (
         <Modal show={show} size='lg'>
             <Modal.Body>
                 <div className='d-flex justify-content-between'>
-                    <button className='btn btn-success'>Edit</button>
-                    <button className='btn btn-danger' onClick={handleClose}>Close</button>
+                    <div>
+                        <button className='btn btn-success'>Edit</button>
+                        <button className='btn btn-danger ml-3'>Delete</button>
+                    </div>
+                    {/* <button className='btn btn-danger' onClick={handleClose}>Close</button> */}
+                    <button type="button" className="btn bg-white btn-rounded" onClick={handleClose}>
+                        <i className="fa fa-close text-danger" style={{ fontSize: '30px' }}></i>
+                    </button>
                 </div>
-                <hr />
+                <hr className="m-2"/>
                 <div className='jumbotron' style={{
                     height: '10%',
                     backgroundImage: `url(${data.image_urls[0]})`,

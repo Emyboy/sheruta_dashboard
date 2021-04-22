@@ -73,6 +73,7 @@ export const PersonalInfoForm = (props) => {
 
     const sendPersonalInformation = e => {
         e.preventDefault();
+        console.log('Sending Data ---', data)
         if (state.dataExist) {
             updatePersonalInformation();
         } else {
@@ -83,7 +84,7 @@ export const PersonalInfoForm = (props) => {
                         `Bearer ${auth.jwt}`,
                 },
                 method: 'POST',
-                data
+                data: { ...data, users_permissions_user: auth.user.id}
             })
                 .then(res => {
                     setState({ updating: false });
@@ -256,10 +257,10 @@ export const PersonalInfoForm = (props) => {
                         <div className="col-12">
                             <div className="form-group">
                                 <div className="d-flex justify-content-between">
-                                    <button className='btn btn-primary'>Save To Profile<i className='fa fa-save ml-2'></i></button>
+                                    {/* <button className='btn btn-primary'>Save To Profile<i className='fa fa-save ml-2'></i></button> */}
                                     {
                                         state.updating ? <Spinner /> :
-                                            <button className="btn gredient-btn btn-success">{state.dataExist ? "Next" : "Apply"}</button>
+                                            <button className="btn gredient-btn btn-success">{state.dataExist ? "Save and Continue" : "Apply"}</button>
                                     }
                                 </div>
                             </div>

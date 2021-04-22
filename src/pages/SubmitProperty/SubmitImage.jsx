@@ -1,8 +1,8 @@
 import React, { useCallback, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Toast } from 'primereact/toast';
-import { FileUpload } from 'primereact/fileupload';
-import SubmitHeading from './SubmitHeading';
+// import { Toast } from 'primereact/toast';
+// import { FileUpload } from 'primereact/fileupload';
+// import SubmitHeading from './SubmitHeading';
 import { CardImg, Modal } from 'react-bootstrap';
 import { storage } from '../../Firebase';
 import store from '../../redux/store/store';
@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Spinner } from 'react-activity';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import { useToasts } from 'react-toast-notifications';
 
 const folderName = uuidv4();
 const auth = store.getState().auth;
@@ -29,6 +30,7 @@ export default connect(
         image_urls: []
     })
     const toast = useRef(null);
+    const { addToast } = useToasts();
 
     const onDrop = useCallback(acceptedFiles => {
         // Do something with the files
@@ -121,7 +123,16 @@ export default connect(
     }
 
     const handleSubmit = e => {
-        e.preventDefault()
+        e.preventDefault();
+        if (!props.state.location && !props.state.google_location) {
+            addToast('Please Select A Location', { appearance: 'error', autoDismiss: true })
+        } else if (!props.state.statu) {
+            addToast('Please Select One Status', { appearance: 'error', autoDismiss: true })
+        } else if (props.state.amenities.length === 0) {
+            addToast('Amenities Can\'t Be Empty', { appearance: 'error', autoDismiss: true })
+        }else {
+
+        }
         setState({ ...state, loading: true })
         uploadImages()
         console.log('SENDING ---', { ...props.state, files: state.files })

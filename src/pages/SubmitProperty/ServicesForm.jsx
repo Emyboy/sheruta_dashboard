@@ -47,7 +47,7 @@ const ServicesForm = ({
                     })
                 }
             </div>
-            <button type='button' className='btn btn-success' onClick={handleFirstNext}>Next</button>
+            <button type='button' className='btn btn-success' disabled={!state.service} onClick={handleFirstNext}>Next</button>
         </div>
     )
 }
