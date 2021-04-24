@@ -11,6 +11,7 @@ import { Spinner } from 'react-activity';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
+import ImageFilePreview from '../../components/ImageFilePreview/ImageFilePreview';
 
 const folderName = uuidv4();
 const auth = store.getState().auth;
@@ -34,7 +35,7 @@ export default connect(
 
     const onDrop = useCallback(acceptedFiles => {
         // Do something with the files
-        console.log('SELECTED FILE', acceptedFiles)
+        // console.log('SELECTED FILE', acceptedFiles)
         state.files.push(acceptedFiles[0])
     }, [state.files])
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
@@ -42,7 +43,7 @@ export default connect(
         const newArray = []
         state.files.map(val => file !== val ? newArray.push(val) : null)
         setState({ ...state, files: newArray })
-        console.log('NEW STATE --', state)
+        // console.log('NEW STATE --', state)
     }
 
     const formatData = () => {
@@ -154,15 +155,15 @@ export default connect(
                 </Modal.Body>
             </Modal>
             <div className=''>
-                {state.files.map((val, i) => {
+                {/* {state.files.map((val, i) => {
                     return <>
                         <tr className='border m-0 d-flex justify-content-between p-1' key={i}>
                             <td><CardImg src={URL.createObjectURL(val)} responsive style={{ height: '90px', width: '90px' }} /></td>
-                            {/* <td>Otto</td> */}
                             <td><span onClick={() => removeFile(val)} className='btn-danger btn mt-4'>Remove</span></td>
                         </tr>
                     </>
-                })}
+                })} */}
+                <ImageFilePreview files={state.files} removeFile={removeFile} />
 
             </div>
             <div {...getRootProps()}>

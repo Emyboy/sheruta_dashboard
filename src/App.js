@@ -9,7 +9,6 @@ import './assets/plugins/themify/css/themify.css';
 import './assets/plugins/font-awesome/css/font-awesome.min.css';
 import './assets/plugins/sweetalert/css/sweetalert.css';
 import './assets/plugins/bootstrap/css/bootstrap.min.css';
-import './App.css';
 import Layout from './components/Layout';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ToastProvider } from 'react-toast-notifications';
@@ -26,6 +25,7 @@ import 'primereact/resources/themes/saga-green/theme.css'
 import Routes from './Routes';
 // import io from 'socket.io-client';
 // const socket = io(process.env.REACT_APP_API_URL);
+import './App.css';
 
 if (localStorage.getItem('auth')) {
   store.dispatch({

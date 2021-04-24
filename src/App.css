@@ -36,3 +36,7 @@ input .form-control{
 .p-multiselect {
     min-width: 100% !important;
 }
+
+.gray-text, .control-label{ 
+  color: rgb(78, 87, 79) !important;
+}

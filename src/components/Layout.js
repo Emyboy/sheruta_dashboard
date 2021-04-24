@@ -45,10 +45,10 @@ export const HeaderNav = ({
             <div className='p-2 pr-3' onClick={() => history.goBack()}>
                 <i className='ti-angle-left' style={{ fontSize: '26px' }}></i>
             </div>
-            <div>
+            {subTitle ? <div>
                 <h5 className='m-0'>{title}</h5>
                 <small style={{ color: 'rgb(174 181 195)' }}>{subTitle}</small>
-            </div>
+            </div> : null}
         </div>
     </div>
 }
@@ -64,7 +64,7 @@ export default connect(
 
     const { view } = props;
     useEffect(() => {
-        
+
         document.querySelector('body').classList.add('fixed-nav')
         document.querySelector('body').classList.add('sticky-footer')
         console.log('PROPS ---', props)
@@ -88,7 +88,7 @@ export default connect(
 
 
     // if (JSON.parse(localStorage.getItem('auth')).agent){
-    if(props.auth.user && props.auth.user.role.name === 'Agent'){
+    if (props.auth.user && props.auth.user.role.name === 'Agent') {
         return (
             <>
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
@@ -348,7 +348,7 @@ export default connect(
                 </footer> */}
             </>
         )
-    }else {
+    } else {
         return <Redirect to='/login' />
     }
 })

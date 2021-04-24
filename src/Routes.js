@@ -11,6 +11,8 @@ import SubmitProperty from './pages/SubmitProperty/SubmitProperty';
 import Payment from './pages/Payment/Payment';
 import { connect } from 'react-redux';
 import { getAllAmenities, getAllStatus } from './redux/actions/view.action'
+import Blog from './pages/Blog/Blog';
+import CreateBlog from './pages/Blog/CreateBlog/CreateBlog';
 
 const mapDispatchToProps = {
     getAllAmenities,
@@ -27,6 +29,8 @@ export default connect(null, mapDispatchToProps)(props =>{
         <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/properties" component={Properties} />
+            <Route exact path="/blog" component={Blog} />
+            <Route exact path="/blog/new" component={CreateBlog} />
             <Route exact path="/messages" component={Messages} />
             <Route exact path="/payments" component={Payment} />
             <Route exact path="/login" component={Login} />
