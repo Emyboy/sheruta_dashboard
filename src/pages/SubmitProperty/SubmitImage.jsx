@@ -37,8 +37,10 @@ export default connect(
         // Do something with the files
         // console.log('SELECTED FILE', acceptedFiles)
         state.files.push(acceptedFiles[0])
-    }, [state.files])
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    }, [state.files]);
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    
     const removeFile = file => {
         const newArray = []
         state.files.map(val => file !== val ? newArray.push(val) : null)

@@ -24,7 +24,7 @@ const CreateBlog = (props) => {
         image_url: null,
         description: null,
         blog_categorie: null
-        
+
     });
 
     const onDrop = useCallback(acceptedFiles => {
@@ -38,7 +38,6 @@ const CreateBlog = (props) => {
     const getAllCategories = () => {
         axios(process.env.REACT_APP_API_URL + '/blog-categories')
             .then(res => {
-                console.log('CAT --', res.data);
                 setState({
                     ...state,
                     categories: res.data
@@ -53,6 +52,10 @@ const CreateBlog = (props) => {
         getAllCategories();
     }, [])
 
+    useEffect(() => {
+        console.log('DATA ---', data, state)
+    },[data, state])
+
     return (
         <div>
             <HeaderNav title='Create Blog Post' subTitle='Create an amazing blog post down bellow' />
@@ -60,11 +63,20 @@ const CreateBlog = (props) => {
                 <form>
                     <div className="form-group">
                         <label for="inputName" className="control-label">Title</label>
-                        <input type="text" className="form-control pt-4 pb-4 h1" id="inputName" placeholder="Blog Title" required style={{ fontSize: '25px' }} />
+                        <input
+                            type="text"
+                            className="form-control pt-4 pb-4 h1"
+                            placeholder="Blog Title"
+                            required style={{ fontSize: '25px' }}
+                            onChange={e => setData({ ...data, title: e.target.value })}
+                        />
                     </div>
                     <div className="form-group">
                         <label for="inputName" className="control-label">Description</label>
-                        <textarea rows='6' type="text" className="form-control pt-4 pb-4 h1" id="inputName" placeholder="Blog Description" required />
+                        <textarea rows='6' type="text" className="form-control pt-4 pb-4 h1"
+                            placeholder="Blog Description" required 
+                            onChange={e => setData({ ...data, description: e.target.value })}
+                            />
                     </div>
                     <div className="form-group">
                         <label for="inputName" className="control-label">Category</label>
@@ -72,7 +84,7 @@ const CreateBlog = (props) => {
                             options={state.categories.map(val => {
                                 return { value: val.id, label: val.name }
                             })}
-                            onChange={e => setState({ ...data, blog_categorie: e })}
+                            onChange={e => setData({ ...data, blog_categorie: e })}
                             value={data.blog_categorie}
                         />
                     </div>
@@ -102,11 +114,14 @@ const CreateBlog = (props) => {
                     </div>
                     <label for="inputName" className="control-label">Content</label>
                     <Editor
-
+                        onChange={(e, t) =>{
+                            // console.log(e, t)
+                            setData({ ...data, body_html: e, body_text: t.replace('&nbsp;', " ") })
+                        }}
                     />
                     <hr />
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <button type="button" className="btn waves-effect waves-light btn-rounded btn-success m-4 w-50">Create Post</button>
+                        <button type="submit" className="btn waves-effect waves-light btn-rounded btn-success m-4 w-50">Create Post</button>
                     </div>
                 </form>
             </div>
