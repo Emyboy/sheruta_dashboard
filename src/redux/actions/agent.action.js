@@ -10,7 +10,7 @@ export const getAgentProperties = () => dispatch => {
         },
     })
         .then(res => {
-            console.log(res)
+            // console.log(res)
             dispatch({
                 type: 'SET_AGENT_STATE',
                 payload: {

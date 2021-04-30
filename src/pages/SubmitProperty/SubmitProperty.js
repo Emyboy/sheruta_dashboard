@@ -55,7 +55,7 @@ export const SubmitProperty = (props) => {
 
     useEffect(() => {
         console.log('STATE --', state)
-    }, [])
+    }, [state])
 
 
     if (!props.auth.user) {

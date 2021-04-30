@@ -43,7 +43,7 @@ export default connect(
                 <div className='row'>
                     {
                         props.agent.properties.map((val, i) => {
-                            console.log('EACH Properties --', val)
+                            // console.log('EACH Properties --', val)
                             return <EachProperty key={i} data={val} />
                         })
                     }

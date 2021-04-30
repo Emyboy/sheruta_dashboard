@@ -11,6 +11,7 @@ import { useToasts } from 'react-toast-notifications';
 
 
 export const SubmitForm = (props) => {
+    const { data } = props;
     const [state, setState] = useState({
         amenities: [],
         status: []
@@ -40,12 +41,12 @@ export const SubmitForm = (props) => {
     }
 
     useEffect(() => {
-        if (state.amenities.length === 0) {
+        if (state.amenities.length === 0 && !data) {
             getAllAmenities();
         }
     }, [state.amenities]);
     useEffect(() => {
-        if (state.status.length === 0) {
+        if (state.status.length === 0 && !data) {
             getAllStatus();
         }
     }, [state.status]);
@@ -67,9 +68,8 @@ export const SubmitForm = (props) => {
         }
     }
 
-    const { data } = props;
 
-    // console.log('STATE ---', state);
+    console.log('DATA ---', data);
     return (
         <div className='mt-4'>
             {

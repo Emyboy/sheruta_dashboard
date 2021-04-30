@@ -94,7 +94,7 @@ export default connect(
                 <nav className="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
                     <header onClick={toggleSideNav} className="header-logo">
                         <a className="nav-link text-center mr-lg-3 hidden-xs" id="sidenavToggler"><i className="ti-align-left"></i></a>
-                        <a className="navbar-brand" href="index.html">Sheruta NG</a>
+                        <Link className="navbar-brand" to="/">Sheruta NG</Link>
                     </header>
 
                     <button onClick={toggleSideNav} className="mb-3 navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -131,7 +131,7 @@ export default connect(
                             </li>
                         </ul>
 
-                        <ul className="navbar-nav ml-auto">
+                        {/* <ul className="navbar-nav ml-auto">
 
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle mr-lg-3 a-topbar__nav a-nav" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -330,9 +330,9 @@ export default connect(
                                     <li><a className="dropdown-item" href="#"><i className="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ul> */}
                     </div>
-                    <button className="w3-button w3-teal w3-xlarge w3-right"><i className="spin fa fa-cog" aria-hidden="true"></i></button>
+                    {/* <button className="w3-button w3-teal w3-xlarge w3-right"><i className="spin fa fa-cog" aria-hidden="true"></i></button> */}
                 </nav>
 
                 <div className='content-wrapper'>

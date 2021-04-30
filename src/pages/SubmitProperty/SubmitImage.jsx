@@ -70,7 +70,7 @@ export default connect(
                 ...formatData(),
                 image_urls: state.image_urls,
                 uid: folderName,
-                agent: auth.agent.id
+                agent: props.auth.agent.id
             }
         })
             .then(res => {
