@@ -17,13 +17,13 @@ const folderName = uuidv4();
 const auth = store.getState().auth;
 const theState = JSON.parse(localStorage.getItem('state'))
 
-const mapStateToProps = state =>({
+const mapStateToProps = state => ({
     auth: state.auth
 })
 
 export default connect(
     mapStateToProps
-)(props=> {
+)(props => {
     const [state, setState] = useState({
         loading: false,
         progress: 0,
@@ -40,7 +40,7 @@ export default connect(
     }, [state.files]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-    
+
     const removeFile = file => {
         const newArray = []
         state.files.map(val => file !== val ? newArray.push(val) : null)
@@ -53,8 +53,9 @@ export default connect(
         return {
             ...parentState,
             amenities: parentState.amenities.map(val => val.value),
-            category: parentState.category.id,
-            statu: parentState.statu? parentState.statu.value: null
+            categorie: parentState.category.id,
+            statu: parentState.statu ? parentState.statu.value : null,
+            payment_type: parentState.payment_type ? parentState.payment_type.value : null
         }
     }
 
@@ -133,7 +134,7 @@ export default connect(
             addToast('Please Select One Status', { appearance: 'error', autoDismiss: true })
         } else if (props.state.amenities.length === 0) {
             addToast('Amenities Can\'t Be Empty', { appearance: 'error', autoDismiss: true })
-        }else {
+        } else {
 
         }
         setState({ ...state, loading: true })

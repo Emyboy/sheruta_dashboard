@@ -14,7 +14,8 @@ export const SubmitForm = (props) => {
     const { data } = props;
     const [state, setState] = useState({
         amenities: [],
-        status: []
+        status: [],
+        paymentTypes: []
     });
     const { addToast } = useToasts();
 
@@ -40,16 +41,34 @@ export const SubmitForm = (props) => {
             })
     }
 
+    const getAllPaymentTypes = () => {
+        axios(process.env.REACT_APP_API_URL + '/payment-types')
+            .then(res => {
+                console.log('PAYMENT TYPES ----', res.data);
+                setState({ ...state, paymentTypes: res.data})
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+    }
+
     useEffect(() => {
         if (state.amenities.length === 0 && !data) {
             getAllAmenities();
         }
     }, [state.amenities]);
+
     useEffect(() => {
         if (state.status.length === 0 && !data) {
             getAllStatus();
         }
     }, [state.status]);
+
+    useEffect(() => {
+        if (state.paymentTypes.length === 0 && !data) {
+            getAllPaymentTypes();
+        }
+    }, [state.paymentTypes]);
 
     const handle_submit = e => {
         e.preventDefault();
@@ -177,17 +196,27 @@ export const SubmitForm = (props) => {
 
 
                         <div className="form-group">
-                            <div className="col-sm-12">
-                                <label for="inputName" className="control-label">Amenities</label>
-                                <Select
-                                    onChange={e => props.setState({ ...props.state, amenities: e })}
-                                    value={props.state.amenities}
-                                    options={state.amenities.map(val => ({ value: val.id, label: val.name.toUpperCase() }))}
-                                    isMulti
-                                />
+                            <div className="row mrg-0">
+                                <div className="col-sm-6">
+                                    <label for="inputName" className="control-label">Amenities</label>
+                                    <Select
+                                        onChange={e => props.setState({ ...props.state, amenities: e })}
+                                        value={props.state.amenities}
+                                        options={state.amenities.map(val => ({ value: val.id, label: val.name.toUpperCase() }))}
+                                        isMulti
+                                    />
+                                </div>
+                                <div className="col-sm-6">
+                                    <label for="inputName" className="control-label">Payment Type</label>
+                                    <Select
+                                        onChange={e => props.setState({ ...props.state, payment_type: e })}
+                                        value={props.state.payment_type}
+                                        options={state.paymentTypes.map(val => ({ value: val.id, label: val.name.toUpperCase() }))}
+                                    />
+                                </div>
                             </div>
-
                         </div>
+
 
                         <div className="col-sm-12">
                             <div className="form-group">

@@ -32,7 +32,8 @@ export const SubmitProperty = (props) => {
         service: null,
         personal_info: null,
         amenities: [],
-        status: []
+        status: [],
+        payment_type: null
     })
 
     const handleFirstNext = () => {
