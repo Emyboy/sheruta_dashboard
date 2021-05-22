@@ -60,7 +60,8 @@ export default connect(
     }
 
     const sendToDb = () => {
-        console.log('sending to db ---', formatData())
+        console.log('sending to db ---', formatData());
+        console.log('auth.jwt ---', auth.jwt)
         axios(process.env.REACT_APP_API_URL + '/properties', {
             method: 'POST',
             headers: {

@@ -48,7 +48,7 @@ export default connect(
     const createAgentAccount = () => {
         setState({ ...state, loading: true })
         console.log('sending --', data)
-        axios(process.env.REACT_APP_API_URL + '/agents', {
+        axios(process.env.REACT_APP_API_URL + '/agents/new', {
             method: 'POST',
             headers: {
                 Authorization:
