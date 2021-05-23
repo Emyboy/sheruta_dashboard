@@ -13,7 +13,6 @@ import { connect } from 'react-redux';
 import { useToasts } from 'react-toast-notifications';
 import ImageFilePreview from '../../components/ImageFilePreview/ImageFilePreview';
 
-const folderName = uuidv4();
 const auth = store.getState().auth;
 const theState = JSON.parse(localStorage.getItem('state'))
 
@@ -21,7 +20,8 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(
+// const folderName = uuidv4() + `@${new Date().toJSON()}`
+const SubmitImage = connect(
     mapStateToProps
 )(props => {
     const [state, setState] = useState({
@@ -30,6 +30,7 @@ export default connect(
         files: [],
         image_urls: []
     })
+    const [folderName, setFolderName] = useState(uuidv4() + `@${new Date().toJSON()}`)
     const toast = useRef(null);
     const { addToast } = useToasts();
 
@@ -80,6 +81,7 @@ export default connect(
                 props.setState({ ...props.state, display: 'success' })
             })
             .catch(err => {
+                props.setState({ ...props.state, display: 'error' })
                 console.log(err)
             })
     }
@@ -96,6 +98,7 @@ export default connect(
                     props.setState({ ...props.state, progress: progress, display: 'loading' })
                 },
                 (error) => {
+                    props.setState({ ...props.state, display: 'error' })
                     switch (error.code) {
                         case 'storage/unauthorized':
                             // User doesn't have permission to access the object
@@ -147,8 +150,13 @@ export default connect(
 
     // }, [state.loading])
 
-    console.log('LOCAL STATE ---', theState);
-    console.log('REDX AUTH ---', auth)
+    // console.log('LOCAL STATE ---', theState);
+    // console.log('REDX AUTH ---', auth)
+
+    React.useEffect(() => {
+        console.log('%c Folder Name Don Change', "color:red")
+        setFolderName(uuidv4() + `@${new Date().toJSON()}`)
+    },[])
 
     return (
         <div className=''>
@@ -170,6 +178,7 @@ export default connect(
                 <ImageFilePreview files={state.files} removeFile={removeFile} />
 
             </div>
+            <h1>{folderName}</h1>
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <div className="form-group br">
@@ -189,3 +198,6 @@ export default connect(
         </div>
     )
 })
+
+
+export default SubmitImage;
