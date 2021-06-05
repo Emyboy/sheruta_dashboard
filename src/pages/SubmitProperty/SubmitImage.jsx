@@ -60,14 +60,27 @@ const SubmitImage = connect(
         }
     }
 
+    const deleteImage = (i) => {
+        state.files.map((val, i) => {
+            storage.ref().child(`images/properties/${props.auth.agent.id}/${folderName}/image_${i}`).delete()
+                .then(() => {
+                    // File deleted successfully
+                    console.log("Img deleted")
+                }).catch((error) => {
+                    // Uh-oh, an error occurred!
+                    console.log("DELETE ERROR", error)
+                });
+        })
+    };
+
     const sendToDb = () => {
         console.log('sending to db ---', formatData());
-        console.log('auth.jwt ---', auth.jwt)
+        console.log('auth.jwt ---', JSON.parse(localStorage.getItem('state')).auth.jwt)
         axios(process.env.REACT_APP_API_URL + '/properties', {
             method: 'POST',
             headers: {
                 Authorization:
-                    `Bearer ${auth.jwt}`,
+                    `Bearer ${JSON.parse(localStorage.getItem('state')).auth.jwt}`,
             },
             data: {
                 ...formatData(),
@@ -81,6 +94,7 @@ const SubmitImage = connect(
                 props.setState({ ...props.state, display: 'success' })
             })
             .catch(err => {
+                deleteImage()
                 props.setState({ ...props.state, display: 'error' })
                 console.log(err)
             })
@@ -98,6 +112,7 @@ const SubmitImage = connect(
                     props.setState({ ...props.state, progress: progress, display: 'loading' })
                 },
                 (error) => {
+                    deleteImage(i);
                     props.setState({ ...props.state, display: 'error' })
                     switch (error.code) {
                         case 'storage/unauthorized':
@@ -156,7 +171,7 @@ const SubmitImage = connect(
     React.useEffect(() => {
         console.log('%c Folder Name Don Change', "color:red")
         setFolderName(uuidv4() + `@${new Date().toJSON()}`)
-    },[])
+    }, [])
 
     return (
         <div className=''>
@@ -178,7 +193,7 @@ const SubmitImage = connect(
                 <ImageFilePreview files={state.files} removeFile={removeFile} />
 
             </div>
-            <h1>{folderName}</h1>
+            <p>{folderName}</p>
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 <div className="form-group br">

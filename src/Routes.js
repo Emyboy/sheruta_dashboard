@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { getAllAmenities, getAllStatus } from './redux/actions/view.action'
 import Blog from './pages/Blog/Blog';
 import CreateBlog from './pages/Blog/CreateBlog/CreateBlog';
+import Email from './pages/Email/Email';
 
 const mapDispatchToProps = {
     getAllAmenities,
@@ -30,6 +31,7 @@ export default connect(null, mapDispatchToProps)(props =>{
             <Route exact path="/" component={Home} />
             <Route exact path="/properties" component={Properties} />
             <Route exact path="/blog" component={Blog} />
+            <Route exact path="/email" component={Email} />
             <Route exact path="/blog/new" component={CreateBlog} />
             <Route exact path="/messages" component={Messages} />
             <Route exact path="/payments" component={Payment} />

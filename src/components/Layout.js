@@ -107,11 +107,12 @@ export default connect(
                             <ul className="navbar-nav navbar-sidenav" id="exampleAccordion">
                                 <EachNav onClick={toggleSideNav} icon='ti ti-home' name='Home' to='/' active={currentPage === 'home'} />
                                 <EachNav onClick={toggleSideNav} icon='ti ti-user' name='Profile' to='/profile' active={currentPage === 'profile'} />
-                                <EachNav onClick={toggleSideNav} icon='ti-email' name='Messages' to='/messages' active={currentPage === 'messages'} badge={2} />
+                                <EachNav onClick={toggleSideNav} icon='ti ti-email' name='Email' to='/email' active={currentPage === 'email'} />
+                                {/* <EachNav onClick={toggleSideNav} icon='ti-email' name='Messages' to='/messages' active={currentPage === 'messages'} badge={2} /> */}
                                 <EachNav onClick={toggleSideNav} icon='ti ti-list' name='Properties' to='/properties' active={currentPage === 'properties'} />
-                                <EachNav onClick={toggleSideNav} icon='ti ti-money' name='Payments' to='/payments' active={currentPage === 'payments'} />
-                                <EachNav onClick={toggleSideNav} icon='ti ti-bell' name='Notifications' to='/notifications' active={currentPage === 'notification'} badge={22} />
-                                <EachNav onClick={toggleSideNav} icon='ti ti-pencil' name='Blog' to='/blog' active={currentPage === 'blog'} />
+                                {/* <EachNav onClick={toggleSideNav} icon='ti ti-money' name='Payments' to='/payments' active={currentPage === 'payments'} /> */}
+                                {/* <EachNav onClick={toggleSideNav} icon='ti ti-bell' name='Notifications' to='/notifications' active={currentPage === 'notification'} badge={22} /> */}
+                                {/* <EachNav onClick={toggleSideNav} icon='ti ti-pencil' name='Blog' to='/blog' active={currentPage === 'blog'} /> */}
                                 <EachNav onClick={props.logoutAgent} icon='ti ti-power-off' name='Logout' to='/login' active={currentPage === null} />
                             </ul>
                         </div>

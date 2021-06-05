@@ -55,7 +55,7 @@ export const SubmitProperty = (props) => {
     }
 
     useEffect(() => {
-        console.log('STATE --', state)
+        console.log('STATE --', state, )
     }, [state])
 
 
@@ -176,7 +176,7 @@ export const SubmitProperty = (props) => {
                                                                 <div className="text-center">
                                                                     <img src="https://lh3.googleusercontent.com/proxy/F0YwYdX9lAJrfX7khFZPB7tdTyNQHLdK-_D9JRUey7b4fSAeHfRxC8mqrLEyJaVFxFXJPbpDCwzEUlUiq0ah_L2s3uwv_L0" style={{ width: '200px' }} className="img-responsive" alt="" />
 
-                                                                    <h2>Uploaded Faild</h2>
+                                                                    <h2>Upload Faild</h2>
                                                                     <p>Your property failed to upload.</p>
                                                                 </div>
                                                             </div>
