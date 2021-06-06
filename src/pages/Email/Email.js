@@ -37,7 +37,8 @@ const Email = (props) => {
                 setState({ ...state, loading: false });
                 console.log(res);
                 addToast('Email has been sent', { appearance: 'success', autoDismiss: true });
-                setData({ ...data, actionText: null, actionURL: null, body: '', heading: null })
+                setData({ ...data, actionText: '', actionURL: '', body: '', heading: '' })
+                alert('Added')
             })
             .catch(err => {
                 setState({ ...state, loading: false });
@@ -59,11 +60,11 @@ const Email = (props) => {
                         <input required type="text" className="form-control" id="inputEmailHeading" placeholder="Email Heading" onChange={e => setData({ ...data, heading: e.target.value })} defaultValue={data.heading} />
                     </div>
                     <div className="form-group">
-                        <label>Action Text</label>
+                        <label>Call To Action Text</label>
                         <input  type="text" className="form-control" id="inputEmail3" placeholder="Action text" onChange={e => setData({ ...data, actionText: e.target.value })} defaultValue={data.actionText} />
                     </div>
                     <div className="form-group">
-                        <label>Action URL</label>
+                        <label>Call To Action URL</label>
                         <input type="text" className="form-control" id="inputEmail3" placeholder="Action URL" onChange={e => setData({ ...data, actionURL: e.target.value })} defaultValue={data.actionURL} />
                     </div>
                     <Editor
